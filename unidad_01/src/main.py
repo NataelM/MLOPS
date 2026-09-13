@@ -3,9 +3,14 @@ import numpy as np
 
 def hello_world():
     print("\n" + "━" * 60)
-    print("\033[1;36m╔" + "═" * 24 + " H O L A   M U N D O " + "═" * 24 + "╗\033[0m")
-    print("\033[1;35m║\033[0m" + " " * 4 + "\033[1;33m🚀 Hello, world! Bienvenido al entorno dev\033[0m" + " " * 4 + "\033[1;35m║\033[0m")
-    print("\033[1;36m╚" + "═" * 56 + "╝\033[0m")
+    box_width = 58
+    title = "H O L A   M U N D O"
+    msg = "🚀 Hello, world! Bienvenido al entorno dev"
+
+    print(f"\033[1;36m╔{'═' * (box_width + 2)}╗\033[0m")
+    print(f"\033[1;35m║\033[0m {title.center(box_width)} \033[1;35m║\033[0m")
+    print(f"\033[1;35m║\033[0m {msg.center(box_width)} \033[1;35m║\033[0m")
+    print(f"\033[1;36m╚{'═' * (box_width + 2)}╝\033[0m")
     print("━" * 60 + "\n")
 
 print(pd.__version__)
