@@ -1,0 +1,122 @@
+02:31:44 | __main__             | INFO | MLflow run iniciado: b4438a684e8f41549251b0081bc9fd38
+02:31:44 | data_loader          | INFO | Cargando datos desde data/df.csv
+02:31:44 | data_loader          | INFO | Dataset cargado: 150000 filas x 12 columnas
+02:31:45 | data_loader          | INFO | Distribucion Default: {0: 139974, 1: 10026}
+02:31:45 | preprocessing        | INFO | Mto_ingreso_mensual: 0 valores NA-string convertidos a NaN
+02:31:45 | preprocessing        | INFO | Nro_dependiente: 0 valores NA-string convertidos a NaN
+02:31:45 | preprocessing        | INFO | Prct_uso_tc: 3338 outliers tratados [0.00, 1.00]
+02:31:45 | preprocessing        | INFO | Prct_deuda_vs_ingresos: 14993 outliers tratados [0.00, 2449.00]
+02:31:45 | preprocessing        | INFO | Mto_ingreso_mensual: 12013 outliers tratados [1300.00, 14587.60]
+02:31:45 | preprocessing        | INFO | Mto_ingreso_mensual: 29731 nulos imputados con median (5400.0000)
+02:31:45 | preprocessing        | INFO | Nro_dependiente: 3924 nulos imputados con mode (0.0000)
+02:31:45 | features             | INFO | Score_retrasos: min=0.0 max=980.0
+02:31:45 | features             | INFO | Edad_cat: {'45-55': 36690, '55-65': 33406, '35-45': 29819, '>65': 28586, '25-35': 18458, '<25': 3028}
+02:31:45 | features             | INFO | Top 18 features: ['Prct_uso_tc', 'Prct_uso_tc_std', 'Nro_prestao_retrasados', 'Nro_prestao_retrasados_std', 'Score_retrasos']
+02:31:45 | preprocessing        | INFO | Split: train=120000 test=30000
+02:31:45 | preprocessing        | INFO | Balanceo oversampling: antes=120000 despues=223958
+02:32:16 | train                | INFO | [Regresion Logistica] Recall=0.7521 | F1=0.2949 | ROC-AUC=0.8353
+02:32:38 | train                | INFO | [Random Forest] Recall=0.7466 | F1=0.3488 | ROC-AUC=0.8634
+02:34:02 | train                | INFO | [Gradient Boosting] Recall=0.7676 | F1=0.3418 | ROC-AUC=0.8669
+02:34:02 | train                | INFO | Mejor modelo: Random Forest (F1=0.3488)
+02:34:52 | __main__             | INFO | MLflow run iniciado: cd0b535949ca4b9a90fbc6a32a22b83b
+02:34:52 | data_loader          | INFO | Cargando datos desde data/df.csv
+02:34:52 | data_loader          | INFO | Dataset cargado: 150000 filas x 12 columnas
+02:34:52 | data_loader          | INFO | Distribucion Default: {0: 139974, 1: 10026}
+02:34:52 | preprocessing        | INFO | Mto_ingreso_mensual: 0 valores NA-string convertidos a NaN
+02:34:52 | preprocessing        | INFO | Nro_dependiente: 0 valores NA-string convertidos a NaN
+02:34:52 | preprocessing        | INFO | Prct_uso_tc: 3338 outliers tratados [0.00, 1.00]
+02:34:52 | preprocessing        | INFO | Prct_deuda_vs_ingresos: 14993 outliers tratados [0.00, 2449.00]
+02:34:52 | preprocessing        | INFO | Mto_ingreso_mensual: 12013 outliers tratados [1300.00, 14587.60]
+02:34:52 | preprocessing        | INFO | Mto_ingreso_mensual: 29731 nulos imputados con median (5400.0000)
+02:34:52 | preprocessing        | INFO | Nro_dependiente: 3924 nulos imputados con mode (0.0000)
+02:34:52 | features             | INFO | Score_retrasos: min=0.0 max=980.0
+02:34:52 | features             | INFO | Edad_cat: {'45-55': 36690, '55-65': 33406, '35-45': 29819, '>65': 28586, '25-35': 18458, '<25': 3028}
+02:34:52 | features             | INFO | Top 18 features: ['Prct_uso_tc', 'Prct_uso_tc_std', 'Nro_prestao_retrasados', 'Nro_prestao_retrasados_std', 'Score_retrasos']
+02:34:52 | preprocessing        | INFO | Split: train=120000 test=30000
+02:34:53 | preprocessing        | INFO | Balanceo oversampling: antes=120000 despues=223958
+02:35:24 | train                | INFO | [Regresion Logistica] Recall=0.7521 | F1=0.2949 | ROC-AUC=0.8353
+02:35:45 | train                | INFO | [Random Forest] Recall=0.7466 | F1=0.3488 | ROC-AUC=0.8634
+02:37:07 | train                | INFO | [Gradient Boosting] Recall=0.7676 | F1=0.3418 | ROC-AUC=0.8669
+02:37:07 | train                | INFO | Mejor modelo: Random Forest (F1=0.3488)
+02:37:47 | __main__             | INFO | MLflow run iniciado: 0e59ee6e51394b1a882effb3c36a11cf
+02:37:47 | data_loader          | INFO | Cargando datos desde data/df.csv
+02:37:48 | data_loader          | INFO | Dataset cargado: 150000 filas x 12 columnas
+02:37:48 | data_loader          | INFO | Distribucion Default: {0: 139974, 1: 10026}
+02:37:48 | preprocessing        | INFO | Mto_ingreso_mensual: 0 valores NA-string convertidos a NaN
+02:37:48 | preprocessing        | INFO | Nro_dependiente: 0 valores NA-string convertidos a NaN
+02:37:48 | preprocessing        | INFO | Prct_uso_tc: 3338 outliers tratados [0.00, 1.00]
+02:37:48 | preprocessing        | INFO | Prct_deuda_vs_ingresos: 14993 outliers tratados [0.00, 2449.00]
+02:37:48 | preprocessing        | INFO | Mto_ingreso_mensual: 12013 outliers tratados [1300.00, 14587.60]
+02:37:48 | preprocessing        | INFO | Mto_ingreso_mensual: 29731 nulos imputados con median (5400.0000)
+02:37:48 | preprocessing        | INFO | Nro_dependiente: 3924 nulos imputados con mode (0.0000)
+02:37:48 | features             | INFO | Score_retrasos: min=0.0 max=980.0
+02:37:48 | features             | INFO | Edad_cat: {'45-55': 36690, '55-65': 33406, '35-45': 29819, '>65': 28586, '25-35': 18458, '<25': 3028}
+02:37:48 | features             | INFO | Top 18 features: ['Prct_uso_tc', 'Prct_uso_tc_std', 'Nro_prestao_retrasados', 'Nro_prestao_retrasados_std', 'Score_retrasos']
+02:37:48 | preprocessing        | INFO | Split: train=120000 test=30000
+02:37:48 | preprocessing        | INFO | Balanceo oversampling: antes=120000 despues=223958
+02:38:16 | train                | INFO | [Regresion Logistica] Recall=0.7521 | F1=0.2949 | ROC-AUC=0.8353
+02:38:36 | train                | INFO | [Random Forest] Recall=0.7466 | F1=0.3488 | ROC-AUC=0.8634
+02:39:58 | train                | INFO | [Gradient Boosting] Recall=0.7676 | F1=0.3418 | ROC-AUC=0.8669
+02:39:58 | train                | INFO | Mejor modelo: Random Forest (F1=0.3488)
+02:44:41 | __main__             | INFO | MLflow run iniciado: d302f77768784c9d8ffc25723a3cb0b8
+02:44:41 | data_loader          | INFO | Cargando datos desde data/df.csv
+02:44:42 | data_loader          | INFO | Dataset cargado: 150000 filas x 12 columnas
+02:44:42 | data_loader          | INFO | Distribucion Default: {0: 139974, 1: 10026}
+02:44:42 | preprocessing        | INFO | Mto_ingreso_mensual: 0 valores NA-string convertidos a NaN
+02:44:42 | preprocessing        | INFO | Nro_dependiente: 0 valores NA-string convertidos a NaN
+02:44:42 | preprocessing        | INFO | Prct_uso_tc: 3338 outliers tratados [0.00, 1.00]
+02:44:42 | preprocessing        | INFO | Prct_deuda_vs_ingresos: 14993 outliers tratados [0.00, 2449.00]
+02:44:42 | preprocessing        | INFO | Mto_ingreso_mensual: 12013 outliers tratados [1300.00, 14587.60]
+02:44:42 | preprocessing        | INFO | Mto_ingreso_mensual: 29731 nulos imputados con median (5400.0000)
+02:44:42 | preprocessing        | INFO | Nro_dependiente: 3924 nulos imputados con mode (0.0000)
+02:44:42 | features             | INFO | Score_retrasos: min=0.0 max=980.0
+02:44:42 | features             | INFO | Edad_cat: {'45-55': 36690, '55-65': 33406, '35-45': 29819, '>65': 28586, '25-35': 18458, '<25': 3028}
+02:44:42 | features             | INFO | Top 18 features: ['Prct_uso_tc', 'Prct_uso_tc_std', 'Nro_prestao_retrasados', 'Nro_prestao_retrasados_std', 'Score_retrasos']
+02:44:42 | preprocessing        | INFO | Split: train=120000 test=30000
+02:44:42 | preprocessing        | INFO | Balanceo oversampling: antes=120000 despues=223958
+02:45:11 | train                | INFO | [Regresion Logistica] Recall=0.7521 | F1=0.2949 | ROC-AUC=0.8353
+02:45:30 | train                | INFO | [Random Forest] Recall=0.7466 | F1=0.3488 | ROC-AUC=0.8634
+02:46:52 | train                | INFO | [Gradient Boosting] Recall=0.7676 | F1=0.3418 | ROC-AUC=0.8669
+02:46:52 | train                | INFO | Mejor modelo: Random Forest (F1=0.3488)
+02:47:43 | __main__             | INFO | MLflow run iniciado: 82f68e2b57f64df58e1930dc1ced9ff1
+02:47:43 | data_loader          | INFO | Cargando datos desde data/df.csv
+02:47:43 | data_loader          | INFO | Dataset cargado: 150000 filas x 12 columnas
+02:47:43 | data_loader          | INFO | Distribucion Default: {0: 139974, 1: 10026}
+02:47:43 | preprocessing        | INFO | Mto_ingreso_mensual: 0 valores NA-string convertidos a NaN
+02:47:43 | preprocessing        | INFO | Nro_dependiente: 0 valores NA-string convertidos a NaN
+02:47:43 | preprocessing        | INFO | Prct_uso_tc: 3338 outliers tratados [0.00, 1.00]
+02:47:43 | preprocessing        | INFO | Prct_deuda_vs_ingresos: 14993 outliers tratados [0.00, 2449.00]
+02:47:43 | preprocessing        | INFO | Mto_ingreso_mensual: 12013 outliers tratados [1300.00, 14587.60]
+02:47:43 | preprocessing        | INFO | Mto_ingreso_mensual: 29731 nulos imputados con median (5400.0000)
+02:47:43 | preprocessing        | INFO | Nro_dependiente: 3924 nulos imputados con mode (0.0000)
+02:47:43 | features             | INFO | Score_retrasos: min=0.0 max=980.0
+02:47:43 | features             | INFO | Edad_cat: {'45-55': 36690, '55-65': 33406, '35-45': 29819, '>65': 28586, '25-35': 18458, '<25': 3028}
+02:47:43 | features             | INFO | Top 18 features: ['Prct_uso_tc', 'Prct_uso_tc_std', 'Nro_prestao_retrasados', 'Nro_prestao_retrasados_std', 'Score_retrasos']
+02:47:43 | preprocessing        | INFO | Split: train=120000 test=30000
+02:47:44 | preprocessing        | INFO | Balanceo oversampling: antes=120000 despues=223958
+02:48:12 | train                | INFO | [Regresion Logistica] Recall=0.7521 | F1=0.2949 | ROC-AUC=0.8353
+02:48:32 | train                | INFO | [Random Forest] Recall=0.7466 | F1=0.3488 | ROC-AUC=0.8634
+02:49:53 | train                | INFO | [Gradient Boosting] Recall=0.7676 | F1=0.3418 | ROC-AUC=0.8669
+02:49:53 | train                | INFO | Mejor modelo: Random Forest (F1=0.3488)
+02:50:07 | __main__             | INFO | === RESULTADO: Random Forest | F1=0.3488 | Recall=0.7466 | FN=508 ===
+02:55:37 | __main__             | INFO | MLflow run iniciado: 4219fc4f0e964b4284e750e3cde24ad4
+02:55:37 | data_loader          | INFO | Cargando datos desde data/df.csv
+02:55:37 | data_loader          | INFO | Dataset cargado: 150000 filas x 12 columnas
+02:55:37 | data_loader          | INFO | Distribucion Default: {0: 139974, 1: 10026}
+02:55:37 | preprocessing        | INFO | Mto_ingreso_mensual: 0 valores NA-string convertidos a NaN
+02:55:37 | preprocessing        | INFO | Nro_dependiente: 0 valores NA-string convertidos a NaN
+02:55:37 | preprocessing        | INFO | Prct_uso_tc: 3338 outliers tratados [0.00, 1.00]
+02:55:37 | preprocessing        | INFO | Prct_deuda_vs_ingresos: 14993 outliers tratados [0.00, 2449.00]
+02:55:37 | preprocessing        | INFO | Mto_ingreso_mensual: 12013 outliers tratados [1300.00, 14587.60]
+02:55:37 | preprocessing        | INFO | Mto_ingreso_mensual: 29731 nulos imputados con median (5400.0000)
+02:55:37 | preprocessing        | INFO | Nro_dependiente: 3924 nulos imputados con mode (0.0000)
+02:55:37 | features             | INFO | Score_retrasos: min=0.0 max=980.0
+02:55:37 | features             | INFO | Edad_cat: {'45-55': 36690, '55-65': 33406, '35-45': 29819, '>65': 28586, '25-35': 18458, '<25': 3028}
+02:55:37 | features             | INFO | Top 20 features: ['Prct_uso_tc', 'Prct_uso_tc_std', 'Nro_prestao_retrasados', 'Nro_prestao_retrasados_std', 'Score_retrasos']
+02:55:37 | preprocessing        | INFO | Split: train=120000 test=30000
+02:55:37 | preprocessing        | INFO | Balanceo undersampling: antes=120000 despues=16042
+02:55:39 | train                | INFO | [Regresion Logistica] Recall=0.7461 | F1=0.2985 | ROC-AUC=0.8402
+02:55:41 | train                | INFO | [Random Forest] Recall=0.7766 | F1=0.3316 | ROC-AUC=0.8649
+02:55:47 | train                | INFO | [Gradient Boosting] Recall=0.7776 | F1=0.3310 | ROC-AUC=0.8659
+02:55:47 | train                | INFO | Mejor modelo: Random Forest (F1=0.3316)
+02:56:00 | __main__             | INFO | === RESULTADO: Random Forest | F1=0.3316 | Recall=0.7766 | FN=448 ===

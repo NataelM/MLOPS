@@ -1,0 +1,12 @@
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+imbalanced-learn
+scipy
+pytest
+jupyter
+
+dvc>=3.0
+mlflow>=2.0
