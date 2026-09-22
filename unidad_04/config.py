@@ -56,7 +56,7 @@ PESOS_RETRASOS = {
 # ── Entrenamiento ─────────────────────────────────────────────────────────────
 TEST_SIZE        = 0.2
 RANDOM_STATE     = 42
-TECNICA_BALANCEO = 'smote'    # 'smote' | 'undersampling' | 'oversampling'
+TECNICA_BALANCEO = 'undersampling'    # 'smote' | 'undersampling' | 'oversampling'
 
 # ── Evaluación ────────────────────────────────────────────────────────────────
 RECALL_MINIMO = 0.480    # pipeline falla si recall < este valor
