@@ -1,0 +1,16 @@
+creation_timestamp: 1790648956067
+current_stage: Staging
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1790648956092
+model_id: m-de0e4670524f4aeaac34bb70e0e4f6bd
+name: PicosIntensidad-Clasificador
+run_id: b7550ebbca2343e9a172ec63184eeafc
+run_link: null
+source: models:/m-de0e4670524f4aeaac34bb70e0e4f6bd
+status: READY
+status_message: null
+storage_location: file:///workspaces/MLOPS/unidad_06/mlruns/697826454009221367/models/m-de0e4670524f4aeaac34bb70e0e4f6bd/artifacts
+user_id: null
+version: 1
+workspace: default

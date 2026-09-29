@@ -1,0 +1,10 @@
+artifact_location: file:///workspaces/MLOPS/unidad_06/mlruns/697826454009221367/models/m-92163b9ff05349a3850fdd94c5c631fc/artifacts
+creation_timestamp: 1790648907556
+experiment_id: '697826454009221367'
+last_updated_timestamp: 1790648920334
+model_id: m-92163b9ff05349a3850fdd94c5c631fc
+model_type: null
+name: modelo_gridsearch
+source_run_id: 3db26821021e4dabb02a9d2ae1228128
+status: 2
+status_message: null

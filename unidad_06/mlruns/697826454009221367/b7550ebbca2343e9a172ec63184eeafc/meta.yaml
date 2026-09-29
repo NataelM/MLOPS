@@ -1,0 +1,14 @@
+artifact_uri: file:///workspaces/MLOPS/unidad_06/mlruns/697826454009221367/b7550ebbca2343e9a172ec63184eeafc/artifacts
+end_time: 1790648943170
+entry_point_name: ''
+experiment_id: '697826454009221367'
+lifecycle_stage: active
+run_id: b7550ebbca2343e9a172ec63184eeafc
+run_name: RandomSearch-DecisionTree
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1790648932092
+status: 3
+tags: []
+user_id: codespace

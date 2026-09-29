@@ -1,0 +1,34 @@
+02:27:32 | TEMA6 | INFO | =======================================================
+02:27:32 | TEMA6 | INFO |  TEMA 6 — Ajuste y Seguimiento de Modelos
+02:27:32 | TEMA6 | INFO | =======================================================
+02:27:32 | TEMA6 | INFO | >>> Secciones 1-7 : Base pipeline
+02:27:45 | TEMA6 | INFO | <<< OK: Secciones 1-7 : Base pipeline (12.90 s)
+02:27:45 | TEMA6 | INFO | >>> Sección  8    : GridSearchCV + MLflow
+02:28:41 | TEMA6 | INFO | <<< OK: Sección  8    : GridSearchCV + MLflow (55.65 s)
+02:28:41 | TEMA6 | INFO | >>> Sección  9    : RandomizedSearchCV + MLflow
+02:29:04 | TEMA6 | INFO | <<< OK: Sección  9    : RandomizedSearchCV + MLflow (22.95 s)
+02:29:04 | TEMA6 | INFO | >>> Sección  10   : Comparar runs
+02:29:07 | TEMA6 | INFO | <<< OK: Sección  10   : Comparar runs (3.47 s)
+02:29:07 | TEMA6 | INFO | >>> Sección  11   : Mejor modelo
+02:29:14 | TEMA6 | INFO | <<< OK: Sección  11   : Mejor modelo (6.60 s)
+02:29:14 | TEMA6 | INFO | >>> Sección  12   : Model Registry
+02:29:21 | TEMA6 | INFO | <<< OK: Sección  12   : Model Registry (7.21 s)
+02:29:21 | TEMA6 | INFO | =======================================================
+02:29:21 | TEMA6 | INFO |  TEMA 6 COMPLETADO
+02:29:21 | TEMA6 | INFO | =======================================================
+02:29:21 | TEMA6 | INFO |   [OK] Secciones 1-7 : Base pipeline
+02:29:21 | TEMA6 | INFO |   [OK] Sección  8    : GridSearchCV + MLflow
+02:29:21 | TEMA6 | INFO |   [OK] Sección  9    : RandomizedSearchCV + MLflow
+02:29:21 | TEMA6 | INFO |   [OK] Sección  10   : Comparar runs
+02:29:21 | TEMA6 | INFO |   [OK] Sección  11   : Mejor modelo
+02:29:21 | TEMA6 | INFO |   [OK] Sección  12   : Model Registry
+02:29:21 | TEMA6 | INFO | 
+02:29:21 | TEMA6 | INFO |   Resultados:
+02:29:21 | TEMA6 | INFO |     Gráfico comparativo : src/comparacion_runs.png
+02:29:21 | TEMA6 | INFO |     Modelo registrado   : MLflow Model Registry (Staging)
+02:29:21 | TEMA6 | INFO |     Log de ejecución    : tema6_run.log
+02:29:21 | TEMA6 | INFO | 
+02:29:21 | TEMA6 | INFO |   Para ver MLflow UI en Codespace:
+02:29:21 | TEMA6 | INFO |     MLFLOW_ALLOW_FILE_STORE=true mlflow ui --backend-store-uri ./mlruns \
+02:29:21 | TEMA6 | INFO |         --host 0.0.0.0 --port 5000 --allowed-hosts "localhost:*,127.0.0.1:*,*.app.github.dev"
+02:29:21 | TEMA6 | INFO |     Luego: pestaña PORTS -> clic en globo del puerto 5000

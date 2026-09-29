@@ -1,0 +1,12 @@
+# requirements.txt — Dependencias del Tema 6
+# Instalar en el Codespace: pip install -r requirements.txt
+
+# Base (si no están del Tema 3)
+pandas>=1.5
+numpy>=1.23
+scikit-learn>=1.2
+imbalanced-learn>=0.10
+matplotlib>=3.6
+seaborn>=0.12
+mlflow>=3.0          # name= y skops_trusted_types en log_model() (MLflow 3.x)
+scipy>=1.9

@@ -1,0 +1,14 @@
+artifact_uri: file:///workspaces/MLOPS/unidad_06/mlruns/697826454009221367/3db26821021e4dabb02a9d2ae1228128/artifacts
+end_time: 1790648920339
+entry_point_name: ''
+experiment_id: '697826454009221367'
+lifecycle_stage: active
+run_id: 3db26821021e4dabb02a9d2ae1228128
+run_name: GridSearch-DecisionTree
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1790648907485
+status: 3
+tags: []
+user_id: codespace
