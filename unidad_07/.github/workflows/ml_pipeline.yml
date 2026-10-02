@@ -1,0 +1,137 @@
+# .github/workflows/ml_pipeline.yml  -> va en la RAÍZ del repositorio (SDC-MLOPS-4/)
+# CI/CD Pipeline — MLOps Picos de Intensidad
+# Se activa con: push a main o pull_request a main que modifiquen Unidad07/
+
+name: ML Pipeline CI/CD
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Unidad07/**'
+      - '.github/workflows/ml_pipeline.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'Unidad07/**'
+      - '.github/workflows/ml_pipeline.yml'
+  workflow_dispatch:  # permite ejecutar manualmente desde la UI de GitHub Actions
+
+env:
+  PYTHON_VERSION: '3.11'
+  IMAGE_NAME: picos-intensidad-api
+
+# Todos los pasos run: se ejecutan dentro de la carpeta del proyecto
+defaults:
+  run:
+    working-directory: Unidad07
+
+jobs:
+
+  # ── JOB 1: Lint y Tests ────────────────────────────────────────────────────
+  lint-and-test:
+    name: Lint + Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: Unidad07/requirements.txt
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Linting con flake8
+        run: |
+          echo '=== Ejecutando flake8 ==='
+          flake8 src/ tests/ --config=setup.cfg
+          echo 'Linting OK'
+
+      - name: Tests unitarios con pytest
+        run: |
+          echo '=== Ejecutando pytest ==='
+          pytest tests/ -v --tb=short --cov=src --cov-report=term-missing
+
+      - name: Subir reporte de cobertura
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: Unidad07/.coverage
+          include-hidden-files: true  # .coverage es un archivo oculto
+
+  # ── JOB 2: Entrenar el modelo ──────────────────────────────────────────────
+  train-model:
+    name: Entrenar Modelo
+    runs-on: ubuntu-latest
+    needs: lint-and-test  # solo si el Job 1 pasó
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: Unidad07/requirements.txt
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Generar dataset
+        run: python src/generate_data.py
+
+      - name: Entrenar pipeline
+        run: python src/train_pipeline.py
+
+      - name: Validar métricas (quality gate)
+        run: python src/validate_model.py
+
+      - name: Guardar artefactos del modelo
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-artifacts
+          path: Unidad07/artifacts/
+
+  # ── JOB 3: Build Docker ────────────────────────────────────────────────────
+  build-docker:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: train-model  # solo si el Job 2 pasó
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Descargar artefactos del modelo
+        uses: actions/download-artifact@v4
+        with:
+          name: model-artifacts
+          path: Unidad07/artifacts/
+
+      - name: Build de la imagen Docker
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} .
+          docker build -t ${{ env.IMAGE_NAME }}:latest .
+
+      - name: Verificar imagen (smoke test)
+        run: |
+          docker run --rm ${{ env.IMAGE_NAME }}:latest python -c \
+            'import pickle; m=pickle.load(open("artifacts/modelo.pkl","rb")); \
+             print("Modelo OK:", type(m).__name__)'
+
+      # Descomentar para push a Docker Hub (requiere secrets en el repo):
+      # - name: Login a Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # - name: Push imagen a Docker Hub
+      #   run: |
+      #     docker push ${{ env.IMAGE_NAME }}:${{ github.sha }}
+      #     docker push ${{ env.IMAGE_NAME }}:latest
