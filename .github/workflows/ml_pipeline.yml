@@ -1,6 +1,6 @@
 # .github/workflows/ml_pipeline.yml  -> va en la RAÍZ del repositorio (SDC-MLOPS-4/)
 # CI/CD Pipeline — MLOps Picos de Intensidad
-# Se activa con: push a main o pull_request a main que modifiquen Unidad07/
+# Se activa con: push a main o pull_request a main que modifiquen unidad_07/
 
 name: ML Pipeline CI/CD
 
@@ -8,12 +8,12 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'Unidad07/**'
+      - 'unidad_07/**'
       - '.github/workflows/ml_pipeline.yml'
   pull_request:
     branches: [ main ]
     paths:
-      - 'Unidad07/**'
+      - 'unidad_07/**'
       - '.github/workflows/ml_pipeline.yml'
   workflow_dispatch:  # permite ejecutar manualmente desde la UI de GitHub Actions
 
@@ -24,7 +24,7 @@ env:
 # Todos los pasos run: se ejecutan dentro de la carpeta del proyecto
 defaults:
   run:
-    working-directory: Unidad07
+    working-directory: unidad_07
 
 jobs:
 
@@ -42,7 +42,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
-          cache-dependency-path: Unidad07/requirements.txt
+          cache-dependency-path: unidad_07/requirements.txt
 
       - name: Instalar dependencias
         run: pip install -r requirements.txt
@@ -63,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: Unidad07/.coverage
+          path: unidad_07/.coverage
           include-hidden-files: true  # .coverage es un archivo oculto
 
   # ── JOB 2: Entrenar el modelo ──────────────────────────────────────────────
@@ -79,7 +79,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
-          cache-dependency-path: Unidad07/requirements.txt
+          cache-dependency-path: unidad_07/requirements.txt
 
       - name: Instalar dependencias
         run: pip install -r requirements.txt
@@ -97,7 +97,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: model-artifacts
-          path: Unidad07/artifacts/
+          path: unidad_07/artifacts/
 
   # ── JOB 3: Build Docker ────────────────────────────────────────────────────
   build-docker:
@@ -112,7 +112,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: model-artifacts
-          path: Unidad07/artifacts/
+          path: unidad_07/artifacts/
 
       - name: Build de la imagen Docker
         run: |
