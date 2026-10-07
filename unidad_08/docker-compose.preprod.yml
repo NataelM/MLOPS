@@ -1,0 +1,117 @@
+# docker-compose.preprod.yml — Stack completo de pre-producción
+#
+# Uso en Codespace:
+#   docker compose -f docker-compose.preprod.yml up --build
+#   O simplemente: make preprod-up
+#
+# Los puertos 8000 y 5000 se reenvían automáticamente en la pestaña PORTS.
+#
+# Orden de arranque garantizado:
+#   mlflow → trainer → api
+
+services:
+
+  # ── Servicio 1: MLflow Tracking UI ───────────────────────────────────────
+  # Arranca primero. Trainer y API lo usan para registrar experimentos.
+  mlflow:
+    # Reutiliza la imagen del trainer: ya trae MLflow instalado (requirements.txt),
+    # así no hay que hacer pip install cada vez que arranca el contenedor.
+    build:
+      context: .
+      dockerfile: Dockerfile.trainer
+    image: picos-intensidad-trainer:latest
+    container_name: picos-mlflow
+    # MLflow 3.x: backend SQLite (el de archivos file:///mlruns ya no arranca)
+    # --allowed-hosts: permite la URL del Codespace y el nombre interno "mlflow"
+    command:
+      - mlflow
+      - server
+      - --backend-store-uri
+      - sqlite:////mlruns/mlflow.db
+      - --default-artifact-root
+      - /mlruns/artifacts
+      - --host
+      - 0.0.0.0
+      - --port
+      - '5000'
+      - --workers
+      - '1'
+      - --allowed-hosts
+      - localhost:*,127.0.0.1:*,mlflow:*,*.app.github.dev
+    ports:
+      - '${MLFLOW_PORT:-5000}:5000'
+    volumes:
+      - mlruns_vol:/mlruns
+    healthcheck:
+      test: ['CMD', 'python', '-c',
+             'import urllib.request; urllib.request.urlopen("http://localhost:5000/health")']
+      interval: 15s
+      timeout: 8s
+      retries: 5
+      start_period: 60s  # margen para que MLflow cree la base de datos y arranque
+    networks:
+      - picos-net
+
+  # ── Servicio 2: Trainer ───────────────────────────────────────────────────
+  # Corre UNA VEZ: genera datos, entrena y valida el modelo.
+  # Cuando termina con exit 0, la API puede arrancar.
+  # Si falla (exit 1), la API NO arranca — entorno inválido prevenido.
+  trainer:
+    build:
+      context: .
+      dockerfile: Dockerfile.trainer
+    image: picos-intensidad-trainer:latest
+    container_name: picos-trainer
+    env_file: .env.preprod
+    volumes:
+      - artifacts_vol:/app/artifacts
+      - mlruns_vol:/app/mlruns
+      - data_vol:/app/data
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    networks:
+      - picos-net
+
+  # ── Servicio 3: API FastAPI ───────────────────────────────────────────────
+  # Arranca solo cuando el trainer completó exitosamente.
+  # Sirve predicciones en el puerto 8000.
+  api:
+    image: picos-intensidad-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: picos-api
+    ports:
+      - '${API_PORT:-8000}:8000'
+    env_file: .env.preprod
+    volumes:
+      - artifacts_vol:/app/artifacts
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    depends_on:
+      trainer:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'python', '-c',
+             'import urllib.request; urllib.request.urlopen("http://localhost:8000/health")']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - picos-net
+
+# ── Volúmenes compartidos entre servicios ─────────────────────────────────
+volumes:
+  artifacts_vol:  # modelo.pkl y metrics.json — compartido entre trainer y api
+  mlruns_vol:     # experimentos MLflow — compartido entre trainer y mlflow UI
+  data_vol:       # dataset generado por el trainer
+
+# ── Red interna del stack ─────────────────────────────────────────────────
+networks:
+  picos-net:
+    driver: bridge

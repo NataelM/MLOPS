@@ -1,0 +1,20 @@
+# Base (si no están del Tema 3)
+pandas>=1.5
+numpy>=1.23
+scikit-learn==1.9.1   # misma versión en el Codespace, en GitHub Actions y en Docker
+imbalanced-learn>=0.10
+matplotlib>=3.6
+seaborn>=0.12
+mlflow>=3.0
+scipy>=1.9
+
+
+# CI/CD — testing y linting
+pytest>=7.0
+pytest-cov>=4.0       # necesario para --cov (make test y GitHub Actions)
+flake8>=6.0
+
+
+# API — FastAPI + servidor ASGI (Tema 8)
+fastapi>=0.100
+uvicorn>=0.22

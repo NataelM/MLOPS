@@ -1,0 +1,30 @@
+# Dockerfile.trainer — Imagen del servicio de entrenamiento (y de MLflow)
+#
+# Se ejecuta UNA VEZ al arrancar docker compose.
+# Responsabilidad: generar datos + entrenar + validar.
+# Si validate_model.py falla (exit 1), el contenedor falla
+# y Docker Compose evita que la API arranque con un modelo malo.
+
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Dependencias Python
+# IMPORTANTE: estas 4 primeras instrucciones son idénticas a las del Dockerfile
+# de la API. Así Docker construye la capa de pip install UNA sola vez y la
+# comparte entre las dos imágenes (menos CPU, menos tiempo y menos disco).
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+LABEL description="Trainer: genera datos, entrena y valida el modelo"
+
+# Código fuente del pipeline
+COPY src/ ./src/
+
+# Crear directorios de salida (los volúmenes Docker los montarán)
+RUN mkdir -p artifacts data mlruns
+
+# Comando: genera datos → entrena → valida
+# Si validate_model.py falla (exit 1), el contenedor falla con exit 1
+# Docker Compose detecta el fallo y la API no arranca
+CMD ["sh", "-c", "python src/generate_data.py && python src/train_pipeline.py && python src/validate_model.py && echo '✓ Trainer completado exitosamente'"]
