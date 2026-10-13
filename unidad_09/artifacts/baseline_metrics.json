@@ -1,0 +1,18 @@
+{
+  "referencia": {
+    "f1": 0.7785,
+    "recall": 0.7483,
+    "precision": 0.8113,
+    "accuracy": 0.8049
+  },
+  "produccion": {
+    "f1": 0.735,
+    "recall": 0.6378,
+    "precision": 0.8672,
+    "accuracy": 0.6265
+  },
+  "decay_pct": 5.6,
+  "estado": "OK",
+  "f1_umbral_alerta": 0.1,
+  "f1_umbral_reentrenar": 0.15
+}
