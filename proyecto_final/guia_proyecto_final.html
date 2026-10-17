@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<!-- plantilla_unidad.html v3 — HTML con aspecto de documento (igual al PDF) -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MLOPS Proyecto Final — Renovación de Préstamo</title>
+<style>
+:root {
+  --dark: #1A1A2E; --accent: #E94560; --blue: #0F3460;
+  --light-blue: #16213E; --code-bg: #0D1117;
+  --gray: #6C757D; --light-gray: #F8F9FA; --border: #DEE2E6;
+  --warn-bg: #FFF3CD; --warn-border: #E0A800;
+  --info-bg: #E8F4F8; --info-border: #17A2B8;
+  --green-bg: #D4EDDA; --green-border: #28A745;
+  --danger-bg: #F8D7DA; --danger-border: #DC3545;
+  --tech-bg: #FDEBD9; --tech-border: #E8833A;
+  --btn-bg: #21262D; --btn-text: #58A6FF;
+  --code-text: #E6EDF3; --code-cmt: #8B949E;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       background: #DADFE5; color: #212529; line-height: 1.55;
+       padding: 26px 12px 60px; }
+.hoja { background: #fff; max-width: 900px; margin: 0 auto;
+        box-shadow: 0 3px 22px rgba(0,0,0,.22); border-radius: 3px;
+        padding: 26px 34px 30px; }
+.doc-header { display: flex; justify-content: space-between; align-items: baseline;
+              gap: 10px; flex-wrap: wrap; padding-bottom: 8px; margin-bottom: 18px;
+              border-bottom: 1px solid var(--border); }
+.doc-header .brand { font-weight: 700; font-size: 13px; color: var(--dark); }
+.doc-header .sub { font-size: 12px; color: var(--gray); }
+.doc-header a { font-size: 12px; color: var(--blue); text-decoration: none; }
+.doc-header a:hover { color: var(--accent); }
+.doc-footer { display: flex; justify-content: space-between; gap: 10px;
+              flex-wrap: wrap; margin-top: 22px; padding-top: 8px;
+              border-top: 1px solid var(--border);
+              font-size: 12px; color: var(--gray); }
+.cover { border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+         margin-bottom: 20px; }
+.cover-accent { height: 6px; background: var(--accent); }
+.cover-body { padding: 26px 30px; }
+.cover-badge { display: inline-block; background: var(--dark); color: #fff;
+               font-size: 11px; font-weight: 700; padding: 6px 16px;
+               border-radius: 6px; letter-spacing: 1px; margin-bottom: 14px; }
+.cover-sub { font-size: 14px; color: var(--blue); margin-bottom: 6px; }
+.cover-title { font-size: 25px; font-weight: 800; color: var(--dark);
+               line-height: 1.28; margin-bottom: 8px; }
+.cover-cs { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 20px; }
+.pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.pill { background: var(--dark); border-radius: 8px; padding: 8px 14px;
+        text-align: center; flex: 1; min-width: 128px; }
+.pill-label { font-size: 9px; font-weight: 700; color: #AAAACC;
+              letter-spacing: 1px; text-transform: uppercase; }
+.pill-val { font-size: 12px; font-weight: 700; color: #fff; margin-top: 2px; }
+.card { border: 1px solid var(--border); border-radius: 9px; overflow: hidden;
+        margin-bottom: 16px; }
+.sec-header { background: var(--blue); color: #fff; padding: 9px 15px;
+              font-weight: 700; font-size: 14px; }
+.card-body { padding: 14px 18px 6px; }
+.step { background: var(--blue); }
+.step-row { display: flex; align-items: center; }
+.step-badge { background: rgba(0,0,0,0.28); color: #fff; font-weight: 800;
+              font-size: 11px; padding: 9px 15px; text-align: center;
+              min-width: 66px; text-transform: uppercase; line-height: 1.15; }
+.step-badge span { display: block; font-size: 18px; }
+.step-title { color: #fff; font-weight: 700; font-size: 15px; padding: 0 15px; }
+.step-label { margin-left: auto; background: rgba(0,0,0,0.22); color: #E6EDF3;
+              font-size: 10px; padding: 4px 12px; font-family: monospace; }
+.code-wrap { margin: 9px 0 15px; }
+.code-header { display: flex; align-items: center; justify-content: space-between;
+               background: #161b22; border-radius: 8px 8px 0 0;
+               padding: 6px 12px; border-bottom: 1px solid #30363d; }
+.code-lang { font-size: 11px; color: #8B949E; font-family: monospace; }
+.copy-btn { background: var(--btn-bg); color: var(--btn-text); border: 1px solid #30363d;
+            border-radius: 6px; font-size: 11px; font-weight: 600; padding: 4px 12px;
+            cursor: pointer; transition: all 0.15s; display: flex;
+            align-items: center; gap: 5px; }
+.copy-btn:hover { background: #30363d; border-color: var(--btn-text); }
+.copy-btn.copied { color: #3fb950; border-color: #3fb950; }
+.copy-btn svg { width: 13px; height: 13px; fill: currentColor; }
+pre.codigo { background: var(--code-bg); color: var(--code-text);
+      font-family: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+      font-size: 12.5px; line-height: 1.6; padding: 13px 15px; margin: 0;
+      border-radius: 0 0 8px 8px; overflow-x: auto; white-space: pre; }
+.codigo .c,.codigo .c1,.codigo .cm,.codigo .ch,.codigo .cs{color:#8B949E;font-style:italic}
+.codigo .k,.codigo .kn,.codigo .kd,.codigo .ow,.codigo .kc{color:#FF7B72}
+.codigo .s,.codigo .s1,.codigo .s2,.codigo .sd,.codigo .sb{color:#A5D6FF}
+.codigo .nf,.codigo .fm{color:#D2A8FF}
+.codigo .nc{color:#F2CC60}
+.codigo .nb,.codigo .bp,.codigo .m,.codigo .mi,.codigo .mf,.codigo .l{color:#79C0FF}
+.codigo .o{color:#FF7B72}
+.codigo .nd{color:#D2A8FF}
+.codigo .nt{color:#7EE787}
+.codigo .gp{color:#8B949E}
+.box { border-radius: 8px; padding: 11px 15px; margin: 9px 0;
+       font-size: 13.5px; line-height: 1.5; }
+.box-info { background: var(--info-bg); border-left: 4px solid var(--info-border); }
+.box-warn { background: var(--warn-bg); border-left: 4px solid var(--warn-border); }
+.box-success { background: var(--green-bg); border-left: 4px solid var(--green-border); }
+.box-danger { background: var(--danger-bg); border-left: 4px solid var(--danger-border); }
+.box-tech { background: var(--tech-bg); border-left: 4px solid var(--tech-border); }
+table.t { width: 100%; border-collapse: collapse; font-size: 13px; margin: 9px 0 15px; }
+table.t th { background: var(--blue); color: #fff; padding: 8px 12px;
+             text-align: left; font-size: 12px; }
+table.t td { padding: 7px 12px; border-bottom: 1px solid var(--border);
+             vertical-align: top; }
+table.t tr:nth-child(even) td { background: var(--light-gray); }
+table.t code, table.t th code { font-family: monospace; font-size: 12px; }
+.objectives { list-style: none; padding: 0; margin-bottom: 8px; }
+.objectives li { padding: 5px 0 5px 24px; position: relative; font-size: 14px; }
+.objectives li::before { content: '●'; color: var(--accent); position: absolute; left: 0; }
+.learning { margin-bottom: 13px; padding-left: 16px; }
+.learning-title { font-weight: 700; color: var(--blue); font-size: 14px; margin-bottom: 3px; }
+.learning-desc { font-size: 13.5px; color: #444; }
+pre.arbol { background: var(--code-bg); color: var(--code-text);
+            font-family: 'Fira Code', Consolas, monospace; font-size: 12px;
+            line-height: 1.55; padding: 13px 15px; border-radius: 8px;
+            overflow-x: auto; margin: 9px 0 15px; white-space: pre; }
+ul.checklist { list-style: none; padding: 0; margin-bottom: 8px; }
+ul.checklist li { padding: 6px 0 6px 28px; position: relative; font-size: 14px; }
+ul.checklist li::before { content: ""; position: absolute; left: 0; top: 9px;
+  width: 15px; height: 15px; border: 2px solid var(--blue); border-radius: 4px; }
+p { font-size: 14px; margin-bottom: 10px; }
+code { font-family: monospace; font-size: 12.5px; background: #f1f3f5;
+       padding: 1px 5px; border-radius: 3px; }
+ul, ol { padding-left: 22px; margin-bottom: 10px; font-size: 14px; }
+li { margin: 3px 0; }
+strong { color: var(--dark); }
+.nav-unidades { display: flex; justify-content: space-between; gap: 12px; margin-top: 18px; }
+.nav-unidades a { flex: 1; border: 1px solid var(--border); border-radius: 9px;
+  padding: 11px 15px; text-decoration: none; color: var(--dark); font-size: 13px;
+  transition: all .15s; }
+.nav-unidades a:hover { border-color: var(--accent); }
+.nav-unidades .rot { display: block; font-size: 10px; font-weight: 700;
+  color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+@media (max-width: 640px) {
+  body { padding: 10px 4px 40px; }
+  .hoja { padding: 16px 14px 20px; }
+  .pills { flex-direction: column; }
+  .pill { min-width: unset; }
+  pre.codigo, pre.arbol { font-size: 11px; }
+  .step-title { font-size: 13px; }
+  .cover-title { font-size: 20px; }
+}
+@media print {
+  body { background: #fff; padding: 0; }
+  .hoja { box-shadow: none; max-width: none; }
+  .copy-btn { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="hoja">
+  <div class="doc-header">
+    <span class="brand">CURSO DE MLOPS — Proyecto Final</span>
+    <span class="sub">Análogo al Tema 6 · Renovación de Préstamo · Codespaces</span>
+  </div>
+  <div class="cover">
+    <div class="cover-accent"></div>
+    <div class="cover-body">
+      <div class="cover-badge">CURSO DE MLOPS</div>
+      <div class="cover-sub">Proyecto Final — Ajuste y Seguimiento de Modelos</div>
+      <div class="cover-title">Caso Renovación de Préstamo: Tuning, MLflow y Model Registry</div>
+      <div class="cover-cs">Adaptado para GitHub Codespaces</div>
+      <div class="pills">
+        <div class="pill"><div class="pill-label">Nivel</div><div class="pill-val">Intermedio</div></div>
+        <div class="pill"><div class="pill-label">Proyecto</div><div class="pill-val">Renovación de Préstamo</div></div>
+        <div class="pill"><div class="pill-label">Entorno</div><div class="pill-val">GitHub Codespaces</div></div>
+        <div class="pill"><div class="pill-label">Duración</div><div class="pill-val">60 – 90 min</div></div>
+      </div>
+      <div class="box box-info">Todo el proyecto se ejecuta desde la <strong>terminal integrada</strong> del Codespace (<code>Ctrl+`</code>), en la carpeta <code>/workspaces/MLOPS/proyecto_final</code>. El experimento MLflow y sus runs persisten mientras el Codespace esté activo.</div>
+    </div>
+  </div>
+<div class="card"><div class="sec-header">1. ¿Qué estamos haciendo y por qué?</div><div class="card-body">
+<p>Una financiera quiere <strong>anticiparse a la competencia</strong> e identificar qué clientes tienen más probabilidad de aceptar la <strong>renovación de su préstamo</strong>. Para eso cuenta con 2 meses de historia de llamadas del call center (<code>FLAG_VENTA</code> = 1 si el cliente renovó) más información financiera y demográfica de cada cliente.</p>
+<p>En el notebook <code>Caso Renovación de Préstamo.ipynb</code> ya se hizo el análisis exploratorio, la limpieza (capping, <code>log1p</code>, imputación), el One-Hot Encoding, un clustering K-Means y se probaron estrategias de balanceo y modelos. La conclusión fue usar <strong>Random Forest sobre datos con UnderSampling</strong>, y se hizo un <code>GridSearchCV</code> manual.</p>
+<p>En este proyecto llevamos ese notebook al flujo MLOps del <strong>Tema 6</strong>: scripts <code>.py</code> reproducibles, búsqueda de hiperparámetros con <code>GridSearchCV</code> y <code>RandomizedSearchCV</code>, registro de cada experimento en <strong>MLflow</strong>, comparación programática de runs y promoción del ganador al <strong>Model Registry</strong>.</p>
+<div class="box box-warn"><strong>■ El problema:</strong> solo el <strong>3.99 %</strong> de los clientes renueva. Con un desbalance así la accuracy engaña (predecir siempre «no renueva» da 96 %). Por eso balanceamos el train, optimizamos el <strong>F1 de la clase positiva</strong> y registramos también <strong>Recall</strong>, <strong>Precision</strong> y <strong>ROC-AUC</strong>, que son las métricas que el notebook considera relevantes para el negocio.</div>
+</div></div>
+<div class="card"><div class="sec-header">2. ¿Qué lograrás al final?</div><div class="card-body">
+<ul class="objectives">
+<li>Convertir el preprocesamiento del notebook en un script reproducible con semilla fija (<code>random_state=42</code>).</li>
+<li>Comparar Originales / UnderSampling / OverSampling / SMOTE con una línea base.</li>
+<li>Aplicar <strong>GridSearchCV</strong> (búsqueda exhaustiva) con Stratified K-Fold sobre un <strong>RandomForest</strong>.</li>
+<li>Aplicar <strong>RandomizedSearchCV</strong> (búsqueda aleatoria eficiente).</li>
+<li>Registrar cada experimento en MLflow con parámetros y métricas comparables.</li>
+<li>Comparar todos los runs con <code>mlflow.search_runs()</code> y elegir el mejor por F1.</li>
+<li>Registrar el modelo ganador en el <strong>MLflow Model Registry</strong> (Staging).</li>
+</ul></div></div>
+<div class="card"><div class="sec-header">3. ■ Adaptaciones para GitHub Codespaces</div><div class="card-body">
+<table class="t"><thead><tr><th>Aspecto</th><th>Notebook original (Colab)</th><th>GitHub Codespaces</th></tr></thead><tbody>
+<tr><td>Entorno de ejecución</td><td>Notebook <code>.ipynb</code> con celdas sueltas</td><td>Scripts <code>.py</code> desde la terminal integrada (<code>Ctrl+`</code>)</td></tr>
+<tr><td>Dataset</td><td>Upload manual a Colab</td><td>Ya en el repositorio, en <code>data/Renovacion_prestamo.csv</code></td></tr>
+<tr><td>Tuning</td><td>Un GridSearchCV en una celda, sin registro</td><td>Grid + Random, cada uno como run de MLflow</td></tr>
+<tr><td>MLflow UI</td><td>—</td><td>Puerto 5000 reenviado — pestaña <strong>PORTS</strong></td></tr>
+<tr><td><code>mlruns/</code></td><td>—</td><td>Dentro del workspace — persiste con el Codespace</td></tr>
+<tr><td>Instalación de librerías</td><td><code>pip install imblearn</code> en celda</td><td><code>pip install -r requirements.txt</code> en terminal</td></tr>
+<tr><td>Dependencias no usadas</td><td><code>xgboost</code>, <code>missingno</code></td><td>No se instalan: el pipeline solo usa scikit-learn + imbalanced-learn</td></tr>
+</tbody></table>
+<div class="box box-info"><strong>■ Prerrequisito:</strong> todos los comandos se ejecutan desde <code>/workspaces/MLOPS/proyecto_final</code>. Los scripts usan rutas relativas (<code>data/</code>, <code>src/</code>, <code>mlruns/</code>), igual que en la Unidad 06.</div>
+</div></div>
+<div class="card"><div class="sec-header">4. Conceptos clave y estructura del proyecto</div><div class="card-body">
+<p><strong>Del notebook al script: qué hace <code>01_base_pipeline.py</code></strong></p>
+<table class="t"><thead><tr><th>Etapa del notebook</th><th>Implementación en el script</th></tr></thead><tbody>
+<tr><td>Carga + renombrado</td><td><code>read_csv(sep=";")</code> y el mismo <code>rename</code> (p. ej. <code>USO_TRIM_LINEA_BBVA → Uso_TrimLinea</code>)</td></tr>
+<tr><td>Capping</td><td><code>Ahorro</code>, <code>Prestamo_vigente</code>, <code>Promed_6Mdeuda</code>: negativos → 0</td></tr>
+<tr><td>Outliers</td><td><code>np.log1p</code> sobre 10 variables asimétricas → columnas <code>*_LOG</code></td></tr>
+<tr><td>Nulos &gt; 15 %</td><td><code>Uso_TrimLinea_LOG</code>, <code>Uso_Linea_LOG</code>, <code>Meses_oferta</code>: muestreo uniforme en [μ−σ, μ+σ]</td></tr>
+<tr><td>Nulos &lt; 15 %</td><td>Mediana (numéricas) y moda (<code>REGION</code>, <code>SEXO</code>, <code>EST_CIVIL</code>)</td></tr>
+<tr><td>Codificación</td><td><code>pd.get_dummies</code> sobre las 3 categóricas</td></tr>
+<tr><td>Segmentación</td><td>K-Means (K=3) sobre las 3 variables top de SelectKBest → columna <code>Cluster</code></td></tr>
+<tr><td>Split</td><td>70/30 estratificado, sin <code>MES</code> ni <code>CLIENTE</code> → 40 features</td></tr>
+</tbody></table>
+<p><strong>GridSearchCV vs. RandomizedSearchCV</strong></p>
+<table class="t"><thead><tr><th>Método</th><th>Espacio en este proyecto</th><th>Entrenamientos</th><th>¿Garantiza el óptimo?</th></tr></thead><tbody>
+<tr><td>GridSearchCV</td><td><code>n_estimators</code> × <code>max_depth</code> × <code>min_samples_leaf</code> (4×4×3)</td><td>48 × 5 folds = 240</td><td>Sí (en el espacio dado)</td></tr>
+<tr><td>RandomizedSearchCV</td><td>7 hiperparámetros con <code>randint</code> de <code>scipy.stats</code></td><td>30 × 5 folds = 150</td><td>No (aproximado)</td></tr>
+</tbody></table>
+<div class="box box-warn"><strong>Regla de oro — runs comparables:</strong> todos los runs usan la <strong>misma semilla</strong> (<code>random_state=42</code>, la del notebook), el <strong>mismo split</strong> 70/30, la <strong>misma técnica de balanceo</strong> (UnderSampling), la <strong>misma métrica objetivo</strong> (<code>f1</code>) y el <strong>mismo conjunto de test</strong> (guardado en <code>src/base_data.pkl</code>).</div>
+<p><strong>Estructura del proyecto en el Codespace</strong></p>
+<pre class="arbol">proyecto_final/
+├── Caso Renovación de Préstamo.ipynb   &lt;- notebook original (Colab): referencia del caso
+├── Dataset Renovacion_prestamo.csv     &lt;- dataset original entregado con el caso
+├── Diccionario Renovacion prestamo.xlsx
+├── data/
+│   └── Renovacion_prestamo.csv         &lt;- copia que usa el pipeline (sep=&quot;;&quot;)
+├── pipeline/
+│   ├── 01_base_pipeline.py       &lt;- Secciones 1-7: limpieza + balanceo + línea base
+│   ├── 02_gridsearch_mlflow.py   &lt;- Sección 8: GridSearchCV + MLflow (Run 1)
+│   ├── 03_randomsearch_mlflow.py &lt;- Sección 9: RandomizedSearchCV + MLflow (Run 2)
+│   ├── 04_comparar_runs.py       &lt;- Sección 10: comparar runs + gráfico
+│   ├── 05_mejor_modelo.py        &lt;- Sección 11: selección programática
+│   ├── 06_model_registry.py      &lt;- Sección 12: registro Staging → Production
+│   └── run_pipeline.py           &lt;- orquestador: ejecuta los 6 scripts en orden
+├── src/                          &lt;- salidas generadas (base_data.pkl, run_ids.txt, ...)
+├── mlruns/                       &lt;- tracking MLflow en archivos (regenerable, no en Git)
+├── proyecto_run.log              &lt;- log del orquestador run_pipeline.py
+├── .gitignore                    &lt;- excluye mlruns/, src/ y el log
+├── requirements.txt
+└── guia_proyecto_final.html      &lt;- esta guía</pre>
+</div></div>
+<div class="card"><div class="sec-header step"><div class="step-row"><div class="step-badge">PASO<span>1</span></div><div class="step-title">Dependencias del proyecto</div><span class="step-label">requirements.txt</span></div></div><div class="card-body"><p>Instala las librerías desde la terminal del Codespace:</p><div class="code-wrap" data-archivo="proyecto_final/requirements.txt"><div class="code-header"><span class="code-lang">requirements.txt — requirements.txt</span><button class="copy-btn" type="button"></button></div><pre class="codigo"><span class="c1"># requirements.txt — Dependencias del Proyecto Final (Renovación de Préstamo)</span>
+<span class="c1"># Instalar en el Codespace: pip install -r requirements.txt</span>
+
+pandas&gt;<span class="o">=</span><span class="m">1</span>.5
+numpy&gt;<span class="o">=</span><span class="m">1</span>.23
+scikit-learn&gt;<span class="o">=</span><span class="m">1</span>.2
+imbalanced-learn&gt;<span class="o">=</span><span class="m">0</span>.10
+matplotlib&gt;<span class="o">=</span><span class="m">3</span>.6
+seaborn&gt;<span class="o">=</span><span class="m">0</span>.12
+mlflow&gt;<span class="o">=</span><span class="m">3</span>.0<span class="w">          </span><span class="c1"># name= y skops_trusted_types en log_model() (MLflow 3.x)</span>
+scipy&gt;<span class="o">=</span><span class="m">1</span>.9
+</pre></div><div class="code-wrap" data-archivo=""><div class="code-header"><span class="code-lang">bash — Terminal del Codespace</span><button class="copy-btn" type="button"></button></div><pre class="codigo"><span class="nb">cd</span><span class="w"> </span>/workspaces/MLOPS/proyecto_final
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+<span class="c1"># Verificar MLflow disponible</span>
+mlflow<span class="w"> </span>--version
+<span class="c1"># mlflow, version 3.x</span>
+</pre></div></div></div>
+<div class="card"><div class="sec-header step"><div class="step-row"><div class="step-badge">PASO<span>2</span></div><div class="step-title">Pipeline base (Secciones 1-7)</div><span class="step-label">pipeline/01_base_pipeline.py</span></div></div><div class="card-body">
+<p>Reproduce las secciones del notebook: carga, limpieza, imputación, One-Hot, cluster K-Means y split 70/30. Luego compara las cuatro estrategias de balanceo con un <code>DecisionTree</code> sin tuning y entrena un <code>RandomForest</code> por defecto sobre UnderSampling: ese es la <strong>línea base</strong> contra la que se compara el tuning. Exporta <code>src/base_data.pkl</code> con el train balanceado y el test.</p>
+<div class="code-wrap" data-archivo="proyecto_final/pipeline/01_base_pipeline.py"><div class="code-header"><span class="code-lang">python — pipeline/01_base_pipeline.py</span><button class="copy-btn" type="button"></button></div><pre class="codigo"><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Secciones 1-7 — Pipeline base sin tuning (Caso Renovación de Préstamo).</span>
+
+<span class="sd">Reproduce el notebook &quot;Caso Renovación de Préstamo.ipynb&quot;:</span>
+<span class="sd">carga el dataset, renombra columnas, aplica capping + log1p, imputa nulos,</span>
+<span class="sd">codifica las categóricas (One-Hot), agrega el cluster K-Means (K=3),</span>
+<span class="sd">hace el split 70/30, compara Originales / Under / Over / SMOTE con un</span>
+<span class="sd">DecisionTree y entrena un RandomForest base sobre Undersampling.</span>
+<span class="sd">Exporta base_data.pkl para que los scripts de tuning lo reutilicen.</span>
+
+<span class="sd">Ejecutar: python pipeline/01_base_pipeline.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">classification_report</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">,</span>
+    <span class="n">f1_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">imblearn.over_sampling</span> <span class="kn">import</span> <span class="n">SMOTE</span>
+
+<span class="n">RANDOM_STATE</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">RANDOM_STATE</span><span class="p">)</span>
+
+<span class="c1"># ── Sección 1: Cargar dataset ─────────────────────────────────────────────────</span>
+<span class="n">DATA_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/Renovacion_prestamo.csv&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">DATA_PATH</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;No se encontró </span><span class="si">{</span><span class="n">DATA_PATH</span><span class="si">}</span><span class="s2">. Copia &#39;Dataset Renovacion_prestamo.csv&#39; &quot;</span>
+        <span class="s2">&quot;a data/Renovacion_prestamo.csv&quot;</span>
+    <span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset cargado: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Renombrar columnas para un mejor entendimiento (igual que el notebook)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+    <span class="s2">&quot;LINEA_RENOVADO&quot;</span><span class="p">:</span> <span class="s2">&quot;Linea_Renovado&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PLAZO_RENOVADO&quot;</span><span class="p">:</span> <span class="s2">&quot;Plazo_Renovado&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;USO_LINEA_TOTAL_TC_T2&quot;</span><span class="p">:</span> <span class="s2">&quot;Uso_Linea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;USO_TRIM_LINEA_BBVA&quot;</span><span class="p">:</span> <span class="s2">&quot;Uso_TrimLinea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NR_ENTIDADES_TOTAL_T2&quot;</span><span class="p">:</span> <span class="s2">&quot;Nro_Entidades&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DIFF_NRO_ENTIDA_TOTALES_T2_T12&quot;</span><span class="p">:</span> <span class="s2">&quot;Dif_Entidades&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SDO_CONSUMO_T2&quot;</span><span class="p">:</span> <span class="s2">&quot;Saldo_Consumo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RESENCIA_OFERTA_PLD_RENOVADO&quot;</span><span class="p">:</span> <span class="s2">&quot;Meses_oferta&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Ahorro_Sldo_Bco_T1&quot;</span><span class="p">:</span> <span class="s2">&quot;Ahorro&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PConsumo_Sldo_Bco_T1&quot;</span><span class="p">:</span> <span class="s2">&quot;Prestamo_vigente&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SDO_BCO_tot_sm_pasivo_Bco_6M&quot;</span><span class="p">:</span> <span class="s2">&quot;Promed_6Mdeuda&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FLAG_LIMA_PROVINCIA&quot;</span><span class="p">:</span> <span class="s2">&quot;Flag_LimProv&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CUBRIR_DEUDA_CONSUMO_SF_RENOVA_PLD&quot;</span><span class="p">:</span> <span class="s2">&quot;Deuda_Cubierta%&quot;</span><span class="p">,</span>
+<span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># ── Sección 2: Exploración ────────────────────────────────────────────────────</span>
+<span class="n">TARGET</span> <span class="o">=</span> <span class="s2">&quot;FLAG_VENTA&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Shape       : </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Columnas    : </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribución del target:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">TARGET</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">TARGET</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Duplicados  : </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Nulos por columna (solo &gt; 0):&quot;</span><span class="p">)</span>
+<span class="n">nulos</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">nulos</span><span class="p">[</span><span class="n">nulos</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="c1"># ── Sección 3: Capping + transformación logarítmica ──────────────────────────</span>
+<span class="c1"># Saldos negativos (deudas) -&gt; 0 para poder aplicar log1p</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Ahorro&quot;</span><span class="p">,</span> <span class="s2">&quot;Prestamo_vigente&quot;</span><span class="p">,</span> <span class="s2">&quot;Promed_6Mdeuda&quot;</span><span class="p">]:</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+
+<span class="n">COLS_LOG</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Uso_Linea&quot;</span><span class="p">,</span> <span class="s2">&quot;Uso_TrimLinea&quot;</span><span class="p">,</span> <span class="s2">&quot;Saldo_Consumo&quot;</span><span class="p">,</span> <span class="s2">&quot;SUELDO_ESTIMADO&quot;</span><span class="p">,</span> <span class="s2">&quot;ANTIGUEDAD_MES&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Linea_Renovado&quot;</span><span class="p">,</span> <span class="s2">&quot;Ahorro&quot;</span><span class="p">,</span> <span class="s2">&quot;Prestamo_vigente&quot;</span><span class="p">,</span> <span class="s2">&quot;Promed_6Mdeuda&quot;</span><span class="p">,</span> <span class="s2">&quot;Deuda_Cubierta%&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">COLS_LOG</span><span class="p">:</span>
+    <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">_LOG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+
+<span class="c1"># ── Sección 4: Imputación de nulos ───────────────────────────────────────────</span>
+<span class="c1"># &gt; 15 % nulos: sampling aleatorio uniforme en [media - std, media + std]</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Uso_TrimLinea_LOG&quot;</span><span class="p">,</span> <span class="s2">&quot;Uso_Linea_LOG&quot;</span><span class="p">,</span> <span class="s2">&quot;Meses_oferta&quot;</span><span class="p">]:</span>
+    <span class="n">media</span><span class="p">,</span> <span class="n">std</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+    <span class="n">nulos_col</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">nulos_col</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
+        <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">media</span> <span class="o">-</span> <span class="n">std</span><span class="p">),</span> <span class="n">media</span> <span class="o">+</span> <span class="n">std</span><span class="p">,</span> <span class="n">nulos_col</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="p">)</span>
+
+<span class="c1"># &lt; 15 % nulos: mediana</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Saldo_Consumo_LOG&quot;</span><span class="p">,</span> <span class="s2">&quot;SUELDO_ESTIMADO_LOG&quot;</span><span class="p">,</span> <span class="s2">&quot;ANTIGUEDAD_MES_LOG&quot;</span><span class="p">,</span> <span class="s2">&quot;EDAD&quot;</span><span class="p">]:</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+
+<span class="c1"># Categóricas: moda</span>
+<span class="n">CATEGORICAS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;REGION&quot;</span><span class="p">,</span> <span class="s2">&quot;SEXO&quot;</span><span class="p">,</span> <span class="s2">&quot;EST_CIVIL&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">CATEGORICAS</span><span class="p">:</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mode</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># ── Sección 5: One-Hot Encoding + Cluster K-Means ────────────────────────────</span>
+<span class="n">df_encoded</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">CATEGORICAS</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">FEATURES_CLUSTER</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Uso_TrimLinea_LOG&quot;</span><span class="p">,</span> <span class="s2">&quot;Prestamo_vigente_LOG&quot;</span><span class="p">,</span> <span class="s2">&quot;Uso_Linea_LOG&quot;</span><span class="p">]</span>
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;k-means++&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">df_encoded</span><span class="p">[</span><span class="s2">&quot;Cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">df_encoded</span><span class="p">[</span><span class="n">FEATURES_CLUSTER</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribución de clientes por cluster:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_encoded</span><span class="p">[</span><span class="s2">&quot;Cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+
+<span class="c1"># Quitar las columnas originales que ya tienen versión _LOG</span>
+<span class="n">df_final</span> <span class="o">=</span> <span class="n">df_encoded</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">COLS_LOG</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Dataset final: </span><span class="si">{</span><span class="n">df_final</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Sección 6: Split 70/30 ────────────────────────────────────────────────────</span>
+<span class="c1"># MES y CLIENTE no son variables predictivas</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_final</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">TARGET</span><span class="p">,</span> <span class="s2">&quot;MES&quot;</span><span class="p">,</span> <span class="s2">&quot;CLIENTE&quot;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_final</span><span class="p">[</span><span class="n">TARGET</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.30</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Train: </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> | Test: </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Train target dist: </span><span class="si">{</span><span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test  target dist: </span><span class="si">{</span><span class="n">y_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Sección 6b: UnderSampling, OverSampling y SMOTE ──────────────────────────</span>
+<span class="n">n_minority</span>   <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="n">n_majority</span>   <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">y_train</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="n">idx_majority</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">y_train</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+<span class="n">idx_minority</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">y_train</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">RANDOM_STATE</span><span class="p">)</span>
+
+<span class="c1"># UnderSampling — reducir la clase mayoritaria al tamaño de la minoritaria</span>
+<span class="n">idx_under</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">idx_majority</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_minority</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">X_under</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_under</span><span class="p">],</span> <span class="n">X_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_minority</span><span class="p">]])</span>
+<span class="n">y_under</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">y_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_under</span><span class="p">],</span> <span class="n">y_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_minority</span><span class="p">]])</span>
+
+<span class="c1"># OverSampling — duplicar la clase minoritaria al tamaño de la mayoritaria</span>
+<span class="n">idx_over</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">idx_minority</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_majority</span> <span class="o">-</span> <span class="n">n_minority</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X_over</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_over</span><span class="p">]])</span>
+<span class="n">y_over</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_over</span><span class="p">]])</span>
+
+<span class="c1"># SMOTE — generar ejemplos sintéticos de la clase minoritaria</span>
+<span class="n">smote</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">k_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sampling_strategy</span><span class="o">=</span><span class="s2">&quot;minority&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">)</span>
+<span class="n">X_smote</span><span class="p">,</span> <span class="n">y_smote</span> <span class="o">=</span> <span class="n">smote</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">UnderSampling: </span><span class="si">{</span><span class="n">X_under</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> | dist: </span><span class="si">{</span><span class="n">y_under</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;OverSampling : </span><span class="si">{</span><span class="n">X_over</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> | dist: </span><span class="si">{</span><span class="n">y_over</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SMOTE        : </span><span class="si">{</span><span class="n">X_smote</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> | dist: </span><span class="si">{</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_smote</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">evaluar</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">nombre</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Métricas de la clase positiva (renueva = 1) sobre el test set.&quot;&quot;&quot;</span>
+    <span class="n">y_pred</span>  <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">y_proba</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;accuracy&quot;</span><span class="p">:</span>  <span class="nb">round</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;f1&quot;</span><span class="p">:</span>        <span class="nb">round</span><span class="p">(</span><span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;recall&quot;</span><span class="p">:</span>    <span class="nb">round</span><span class="p">(</span><span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;precision&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;roc_auc&quot;</span><span class="p">:</span>   <span class="nb">round</span><span class="p">(</span><span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[</span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">k</span><span class="si">:</span><span class="s2">&lt;9</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+
+<span class="c1"># ── Sección 7: DecisionTree base (sin tuning) por estrategia de balanceo ─────</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SECCIÓN 7 — DecisionTree base (sin tuning)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="n">resultados_base</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">X_bal</span><span class="p">,</span> <span class="n">y_bal</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;Originales&quot;</span><span class="p">,</span>    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;UnderSampling&quot;</span><span class="p">,</span> <span class="n">X_under</span><span class="p">,</span> <span class="n">y_under</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;OverSampling&quot;</span><span class="p">,</span>  <span class="n">X_over</span><span class="p">,</span>  <span class="n">y_over</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;SMOTE&quot;</span><span class="p">,</span>         <span class="n">X_smote</span><span class="p">,</span> <span class="n">y_smote</span><span class="p">),</span>
+<span class="p">]:</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">)</span>
+    <span class="n">dt</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_bal</span><span class="p">,</span> <span class="n">y_bal</span><span class="p">)</span>
+    <span class="n">resultados_base</span><span class="p">[</span><span class="n">nombre</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluar</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;DecisionTree — </span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># El notebook eligió Random Forest + UnderSampling: es la LÍNEA BASE del tuning</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== REPORTE COMPLETO — RandomForest + UnderSampling (línea base para tuning) ===&quot;</span><span class="p">)</span>
+<span class="n">rf_base</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">)</span>
+<span class="n">rf_base</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_under</span><span class="p">,</span> <span class="n">y_under</span><span class="p">)</span>
+<span class="n">resultados_base</span><span class="p">[</span><span class="s2">&quot;RandomForest-Under&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluar</span><span class="p">(</span><span class="n">rf_base</span><span class="p">,</span> <span class="s2">&quot;RandomForest — UnderSampling&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">rf_base</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">),</span> <span class="n">digits</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== RESUMEN LÍNEA BASE ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">resultados_base</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+
+<span class="c1"># ── Exportar datos para scripts de tuning ────────────────────────────────────</span>
+<span class="n">Path</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;src/base_data.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">((</span><span class="n">X_under</span><span class="p">,</span> <span class="n">y_under</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">f</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✓ Datos exportados a src/base_data.pkl (train = UnderSampling)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Siguiente paso: python pipeline/02_gridsearch_mlflow.py&quot;</span><span class="p">)</span>
+</pre></div>
+<div class="box box-tech"><strong>Observación técnica — OverSampling corregido:</strong> en el notebook, la celda de OverSampling hacía <code>df_class_0.sample(count_class_1, replace=True)</code>: muestreaba la clase <em>mayoritaria</em> al tamaño de la minoritaria, o sea, otro UnderSampling (por eso daba 2444/2444). El script duplica la clase <strong>minoritaria</strong> hasta igualar a la mayoritaria, que es lo que la técnica pretende.</div>
+<div class="box box-tech"><strong>Observación técnica — fuga de información (se mantiene igual al notebook):</strong> la imputación (media, std, mediana, moda) y el K-Means se calculan sobre el dataset completo <em>antes</em> del split, así que el test «ve» estadísticas del train. Se conserva para que los resultados sean comparables con el notebook; en producción estos pasos se ajustan solo con el train (por ejemplo dentro de un <code>Pipeline</code> de scikit-learn).</div>
+<div class="box box-tech"><strong>Observación técnica — ¿por qué UnderSampling + RandomForest y no SMOTE + DecisionTree como en la Unidad 06?</strong> Porque es la conclusión del propio caso: en el notebook el DecisionTree con SMOTE tuvo recall 0.074 (casi no detecta renovaciones) y el Random Forest con UnderSampling fue el elegido. El tuning parte de esa decisión.</div>
+<div class="code-wrap" data-archivo=""><div class="code-header"><span class="code-lang">bash — Ejecutar</span><button class="copy-btn" type="button"></button></div><pre class="codigo">python<span class="w"> </span>pipeline/01_base_pipeline.py
+<span class="c1"># Dataset cargado: (87556, 22)</span>
+<span class="c1"># ...</span>
+<span class="c1"># Distribución de clientes por cluster:</span>
+<span class="c1"># {0: 7560, 1: 43830, 2: 36166}</span>
+<span class="c1"># Dataset final: (87556, 43)</span>
+<span class="c1"># Train: (61289, 40) | Test: (26267, 40)</span>
+<span class="c1"># ...</span>
+<span class="c1"># === RESUMEN LÍNEA BASE ===</span>
+<span class="c1">#                     accuracy      f1  recall  precision  roc_auc</span>
+<span class="c1"># Originales            0.9141  0.0457  0.0515     0.0410   0.5007</span>
+<span class="c1"># UnderSampling         0.5550  0.0904  0.5544     0.0492   0.5547</span>
+<span class="c1"># OverSampling          0.9219  0.0665  0.0697     0.0635   0.5135</span>
+<span class="c1"># SMOTE                 0.9081  0.0607  0.0744     0.0513   0.5086</span>
+<span class="c1"># RandomForest-Under    0.6011  0.1063  0.5945     0.0584   0.6431</span>
+<span class="c1"># </span>
+<span class="c1"># ✓ Datos exportados a src/base_data.pkl (train = UnderSampling)</span>
+<span class="c1">#   Siguiente paso: python pipeline/02_gridsearch_mlflow.py</span>
+</pre></div></div></div>
+<div class="card"><div class="sec-header step"><div class="step-row"><div class="step-badge">PASO<span>3</span></div><div class="step-title">GridSearchCV + MLflow (Run 1)</div><span class="step-label">pipeline/02_gridsearch_mlflow.py</span></div></div><div class="card-body">
+<p>Búsqueda exhaustiva sobre 48 combinaciones × 5 folds = 240 entrenamientos del <code>RandomForestClassifier</code> (amplía la grilla del notebook con <code>n_estimators=10</code> y <code>max_depth=4</code>, los valores del «Random Forest tuneado» manual). El mejor estimador se evalúa en test y se registra en MLflow como <em>Run 1</em>.</p>
+<div class="code-wrap" data-archivo="proyecto_final/pipeline/02_gridsearch_mlflow.py"><div class="code-header"><span class="code-lang">python — pipeline/02_gridsearch_mlflow.py</span><button class="copy-btn" type="button"></button></div><pre class="codigo"><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Sección 8 — GridSearchCV + MLflow (Run 1).</span>
+
+<span class="sd">Búsqueda exhaustiva de hiperparámetros del RandomForest sobre los datos</span>
+<span class="sd">balanceados con UnderSampling (igual que el notebook).</span>
+<span class="sd">4 x 4 x 3 = 48 combinaciones x 5 folds = 240 entrenamientos.</span>
+<span class="sd">Registra el mejor en MLflow como Run 1.</span>
+
+<span class="sd">Ejecutar: python pipeline/02_gridsearch_mlflow.py</span>
+<span class="sd">Prerrequisito: src/base_data.pkl (generado por 01_base_pipeline.py)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">import</span> <span class="nn">mlflow.sklearn</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span><span class="p">,</span> <span class="n">StratifiedKFold</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span>
+    <span class="n">precision_score</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MLFLOW_ALLOW_FILE_STORE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
+
+<span class="n">RANDOM_STATE</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="c1"># ── Cargar datos de la sección base ──────────────────────────────────────────</span>
+<span class="n">BASE_PKL</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;src/base_data.pkl&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">BASE_PKL</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+        <span class="s2">&quot;No se encontró src/base_data.pkl. &quot;</span>
+        <span class="s2">&quot;Ejecuta primero: python pipeline/01_base_pipeline.py&quot;</span>
+    <span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">BASE_PKL</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">X_train_u</span><span class="p">,</span> <span class="n">y_train_u</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Datos cargados — Train: </span><span class="si">{</span><span class="n">X_train_u</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> | Test: </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── 8.1 Configurar MLflow ─────────────────────────────────────────────────────</span>
+<span class="c1"># Usar ruta absoluta correcta — evita el bug de PermissionError en Codespaces</span>
+<span class="n">MLFLOW_DIR</span>   <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;mlruns&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>           <span class="c1"># ruta absoluta real</span>
+<span class="n">TRACKING_URI</span> <span class="o">=</span> <span class="n">MLFLOW_DIR</span><span class="o">.</span><span class="n">as_uri</span><span class="p">()</span>                <span class="c1"># file:///workspaces/.../mlruns</span>
+<span class="n">EXPERIMENT</span>   <span class="o">=</span> <span class="s2">&quot;renovacion-prestamo-tuning&quot;</span>
+
+<span class="n">MLFLOW_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>     <span class="c1"># crear si no existe</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">TRACKING_URI</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="n">EXPERIMENT</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MLflow tracking URI : </span><span class="si">{</span><span class="n">TRACKING_URI</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MLflow experiment   : </span><span class="si">{</span><span class="n">EXPERIMENT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── 8.2 Definir espacio de búsqueda y ejecutar GridSearchCV ──────────────────</span>
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span>     <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">],</span>   <span class="c1"># 4 opciones</span>
+    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span>        <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>    <span class="c1"># 4 opciones</span>
+    <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>            <span class="c1"># 3 opciones</span>
+    <span class="s2">&quot;class_weight&quot;</span><span class="p">:</span>     <span class="p">[</span><span class="s2">&quot;balanced&quot;</span><span class="p">],</span>         <span class="c1"># 1 opción (desbalance residual)</span>
+<span class="p">}</span>
+<span class="c1"># 4 x 4 x 3 x 1 = 48 combinaciones x 5 folds = 240 entrenamientos</span>
+
+<span class="n">skf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">)</span>
+
+<span class="n">gs</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
+    <span class="n">estimator</span>          <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">),</span>
+    <span class="n">param_grid</span>         <span class="o">=</span> <span class="n">param_grid</span><span class="p">,</span>
+    <span class="n">cv</span>                 <span class="o">=</span> <span class="n">skf</span><span class="p">,</span>
+    <span class="n">scoring</span>            <span class="o">=</span> <span class="s2">&quot;f1&quot;</span><span class="p">,</span>
+    <span class="n">n_jobs</span>             <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">verbose</span>            <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">return_train_score</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Ejecutando GridSearchCV (48 combinaciones x 5 folds)...&quot;</span><span class="p">)</span>
+<span class="n">gs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_u</span><span class="p">,</span> <span class="n">y_train_u</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Mejores parámetros : </span><span class="si">{</span><span class="n">gs</span><span class="o">.</span><span class="n">best_params_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mejor F1 CV        : </span><span class="si">{</span><span class="n">gs</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── 8.3 Registrar en MLflow ───────────────────────────────────────────────────</span>
+<span class="n">n_combinaciones</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">gs</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">[</span><span class="s2">&quot;params&quot;</span><span class="p">])</span>
+
+<span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="s2">&quot;GridSearch-RandomForest&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
+    <span class="c1"># Parámetros del mejor estimador</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_params</span><span class="p">(</span><span class="n">gs</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;metodo_busqueda&quot;</span><span class="p">,</span>  <span class="s2">&quot;GridSearchCV&quot;</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;n_combinaciones&quot;</span><span class="p">,</span>  <span class="n">n_combinaciones</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;tecnica_balanceo&quot;</span><span class="p">,</span> <span class="s2">&quot;UnderSampling&quot;</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;n_folds&quot;</span><span class="p">,</span>          <span class="mi">5</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;random_state&quot;</span><span class="p">,</span>     <span class="n">RANDOM_STATE</span><span class="p">)</span>
+
+    <span class="c1"># Evaluar en test set (clase positiva = renueva el préstamo)</span>
+    <span class="n">y_pred_gs</span>  <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">y_proba_gs</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">({</span>
+        <span class="s2">&quot;accuracy&quot;</span><span class="p">:</span>   <span class="nb">round</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span>                    <span class="n">y_pred_gs</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;f1&quot;</span><span class="p">:</span>         <span class="nb">round</span><span class="p">(</span><span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span>                          <span class="n">y_pred_gs</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;recall&quot;</span><span class="p">:</span>     <span class="nb">round</span><span class="p">(</span><span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span>                      <span class="n">y_pred_gs</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;precision&quot;</span><span class="p">:</span>  <span class="nb">round</span><span class="p">(</span><span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_gs</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;roc_auc&quot;</span><span class="p">:</span>    <span class="nb">round</span><span class="p">(</span><span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span>                    <span class="n">y_proba_gs</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;cv_f1_mean&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">gs</span><span class="o">.</span><span class="n">best_score_</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="p">})</span>
+
+    <span class="c1"># Registrar modelo — MLflow 3.x: name= (antes artifact_path=) y skops_trusted_types</span>
+    <span class="c1"># para que el formato skops acepte los árboles del bosque (sklearn.tree._tree.Tree)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span>
+        <span class="n">sk_model</span>            <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">,</span>
+        <span class="n">name</span>                <span class="o">=</span> <span class="s2">&quot;modelo_gridsearch&quot;</span><span class="p">,</span>
+        <span class="n">skops_trusted_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sklearn.tree._tree.Tree&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">run_id_gs</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Run ID GridSearch: </span><span class="si">{</span><span class="n">run_id_gs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== RESULTADO GRIDSEARCH ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_gs</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Guardar run_id para scripts posteriores</span>
+<span class="n">Path</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;src/run_ids.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;gridsearch:</span><span class="si">{</span><span class="n">run_id_gs</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ Run ID guardado en src/run_ids.txt&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Siguiente paso: python pipeline/03_randomsearch_mlflow.py&quot;</span><span class="p">)</span>
+</pre></div>
+<div class="box box-danger"><strong>Error que evita <code>skops_trusted_types</code>:</strong> MLflow 3.x guarda los modelos de scikit-learn en formato <strong>skops</strong> y verifica que se puedan volver a cargar. Cada árbol del bosque contiene un objeto <code>sklearn.tree._tree.Tree</code>, que skops no acepta por defecto: sin el parámetro, <code>log_model()</code> falla con <em>«Untrusted types found in the file: ['sklearn.tree._tree.Tree']»</em>. Es seguro porque el modelo lo acabamos de entrenar nosotros.</div>
+<div class="box box-tech"><strong>Observación técnica — <code>MLFLOW_ALLOW_FILE_STORE</code>:</strong> el tracking se guarda en archivos (<code>file:///…/mlruns</code>). En MLflow 3.x ese backend está en modo mantenimiento y solo funciona si se habilita; por eso cada script ejecuta <code>os.environ["MLFLOW_ALLOW_FILE_STORE"] = "true"</code>.</div>
+<div class="box box-info"><strong>Métricas registradas:</strong> además de las de la Unidad 06 se agrega <code>roc_auc</code> (calculada con <code>predict_proba</code>), porque el notebook la señala como la métrica adecuada para un target desbalanceado.</div>
+</div></div>
+<div class="card"><div class="sec-header step"><div class="step-row"><div class="step-badge">PASO<span>4</span></div><div class="step-title">RandomizedSearchCV + MLflow (Run 2)</div><span class="step-label">pipeline/03_randomsearch_mlflow.py</span></div></div><div class="card-body">
+<p>Muestrea 30 combinaciones de un espacio continuo (<code>randint</code> de <code>scipy.stats</code>) que incluye <code>max_features</code>, <code>criterion</code> y <code>min_samples_split</code>. Se registra como <em>Run 2</em> en el mismo experimento, con la misma semilla y datos, para que ambos runs sean comparables.</p>
+<div class="code-wrap" data-archivo="proyecto_final/pipeline/03_randomsearch_mlflow.py"><div class="code-header"><span class="code-lang">python — pipeline/03_randomsearch_mlflow.py</span><button class="copy-btn" type="button"></button></div><pre class="codigo"><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Sección 9 — RandomizedSearchCV + MLflow (Run 2).</span>
+
+<span class="sd">Muestrea 30 combinaciones aleatorias de un espacio continuo para el</span>
+<span class="sd">RandomForest. Más eficiente que GridSearch para espacios grandes.</span>
+
+<span class="sd">Ejecutar: python pipeline/03_randomsearch_mlflow.py</span>
+<span class="sd">Prerrequisito: src/base_data.pkl (generado por 01_base_pipeline.py)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">import</span> <span class="nn">mlflow.sklearn</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">randint</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span><span class="p">,</span> <span class="n">StratifiedKFold</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span>
+    <span class="n">precision_score</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MLFLOW_ALLOW_FILE_STORE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
+
+<span class="n">RANDOM_STATE</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="c1"># ── Cargar datos ──────────────────────────────────────────────────────────────</span>
+<span class="n">BASE_PKL</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;src/base_data.pkl&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">BASE_PKL</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+        <span class="s2">&quot;No se encontró src/base_data.pkl. &quot;</span>
+        <span class="s2">&quot;Ejecuta primero: python pipeline/01_base_pipeline.py&quot;</span>
+    <span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">BASE_PKL</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">X_train_u</span><span class="p">,</span> <span class="n">y_train_u</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Datos cargados — Train: </span><span class="si">{</span><span class="n">X_train_u</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> | Test: </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Configurar MLflow ─────────────────────────────────────────────────────────</span>
+<span class="n">MLFLOW_DIR</span>   <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;mlruns&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="n">TRACKING_URI</span> <span class="o">=</span> <span class="n">MLFLOW_DIR</span><span class="o">.</span><span class="n">as_uri</span><span class="p">()</span>
+<span class="n">EXPERIMENT</span>   <span class="o">=</span> <span class="s2">&quot;renovacion-prestamo-tuning&quot;</span>
+
+<span class="n">MLFLOW_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">TRACKING_URI</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="n">EXPERIMENT</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MLflow tracking URI : </span><span class="si">{</span><span class="n">TRACKING_URI</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MLflow experiment   : </span><span class="si">{</span><span class="n">EXPERIMENT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Sección 9: RandomizedSearchCV ────────────────────────────────────────────</span>
+<span class="n">param_dist</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span>      <span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span>
+    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span>         <span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span>
+    <span class="s2">&quot;min_samples_split&quot;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+    <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span>  <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+    <span class="s2">&quot;max_features&quot;</span><span class="p">:</span>      <span class="p">[</span><span class="s2">&quot;sqrt&quot;</span><span class="p">,</span> <span class="s2">&quot;log2&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+    <span class="s2">&quot;criterion&quot;</span><span class="p">:</span>         <span class="p">[</span><span class="s2">&quot;gini&quot;</span><span class="p">,</span> <span class="s2">&quot;entropy&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;class_weight&quot;</span><span class="p">:</span>      <span class="p">[</span><span class="s2">&quot;balanced&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">rs</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
+    <span class="n">estimator</span>           <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">),</span>
+    <span class="n">param_distributions</span> <span class="o">=</span> <span class="n">param_dist</span><span class="p">,</span>
+    <span class="n">n_iter</span>              <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="n">cv</span>                  <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">),</span>
+    <span class="n">scoring</span>             <span class="o">=</span> <span class="s2">&quot;f1&quot;</span><span class="p">,</span>
+    <span class="n">random_state</span>        <span class="o">=</span> <span class="n">RANDOM_STATE</span><span class="p">,</span>
+    <span class="n">n_jobs</span>              <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">verbose</span>             <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Ejecutando RandomizedSearchCV (30 combinaciones x 5 folds)...&quot;</span><span class="p">)</span>
+<span class="n">rs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_u</span><span class="p">,</span> <span class="n">y_train_u</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Mejores parámetros : </span><span class="si">{</span><span class="n">rs</span><span class="o">.</span><span class="n">best_params_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mejor F1 CV        : </span><span class="si">{</span><span class="n">rs</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Registrar en MLflow ───────────────────────────────────────────────────────</span>
+<span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="s2">&quot;RandomSearch-RandomForest&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_params</span><span class="p">(</span><span class="n">rs</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;metodo_busqueda&quot;</span><span class="p">,</span>  <span class="s2">&quot;RandomizedSearchCV&quot;</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;n_iter&quot;</span><span class="p">,</span>           <span class="mi">30</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;tecnica_balanceo&quot;</span><span class="p">,</span> <span class="s2">&quot;UnderSampling&quot;</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;n_folds&quot;</span><span class="p">,</span>          <span class="mi">5</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;random_state&quot;</span><span class="p">,</span>     <span class="n">RANDOM_STATE</span><span class="p">)</span>
+
+    <span class="n">y_pred_rs</span>  <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">y_proba_rs</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">({</span>
+        <span class="s2">&quot;accuracy&quot;</span><span class="p">:</span>   <span class="nb">round</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span>                    <span class="n">y_pred_rs</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;f1&quot;</span><span class="p">:</span>         <span class="nb">round</span><span class="p">(</span><span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span>                          <span class="n">y_pred_rs</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;recall&quot;</span><span class="p">:</span>     <span class="nb">round</span><span class="p">(</span><span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span>                      <span class="n">y_pred_rs</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;precision&quot;</span><span class="p">:</span>  <span class="nb">round</span><span class="p">(</span><span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_rs</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;roc_auc&quot;</span><span class="p">:</span>    <span class="nb">round</span><span class="p">(</span><span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span>                    <span class="n">y_proba_rs</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;cv_f1_mean&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">rs</span><span class="o">.</span><span class="n">best_score_</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="p">})</span>
+
+    <span class="c1"># Registrar modelo — MLflow 3.x: name= + skops_trusted_types (igual que en el script 02)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span>
+        <span class="n">sk_model</span>            <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">,</span>
+        <span class="n">name</span>                <span class="o">=</span> <span class="s2">&quot;modelo_randomsearch&quot;</span><span class="p">,</span>
+        <span class="n">skops_trusted_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sklearn.tree._tree.Tree&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">run_id_rs</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Run ID RandomSearch: </span><span class="si">{</span><span class="n">run_id_rs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== RESULTADO RANDOMSEARCH ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_rs</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;src/run_ids.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;randomsearch:</span><span class="si">{</span><span class="n">run_id_rs</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ Run ID guardado en src/run_ids.txt&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Siguiente paso: python pipeline/04_comparar_runs.py&quot;</span><span class="p">)</span>
+</pre></div></div></div>
+<div class="card"><div class="sec-header step"><div class="step-row"><div class="step-badge">PASO<span>5</span></div><div class="step-title">Comparar todos los runs</div><span class="step-label">pipeline/04_comparar_runs.py</span></div></div><div class="card-body">
+<p><code>mlflow.search_runs()</code> devuelve un DataFrame ordenable por cualquier métrica. El script imprime la tabla ordenada por F1 y genera un gráfico de barras (F1, Recall, ROC-AUC, Accuracy) en <code>src/comparacion_runs.png</code>.</p>
+<div class="code-wrap" data-archivo="proyecto_final/pipeline/04_comparar_runs.py"><div class="code-header"><span class="code-lang">python — pipeline/04_comparar_runs.py</span><button class="copy-btn" type="button"></button></div><pre class="codigo"><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Sección 10 — Comparación de runs con mlflow.search_runs().</span>
+
+<span class="sd">Genera tabla comparativa ordenada por F1 y gráfico de barras.</span>
+
+<span class="sd">Ejecutar: python pipeline/04_comparar_runs.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>                 <span class="c1"># sin pantalla: solo guardar el PNG</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MLFLOW_ALLOW_FILE_STORE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># ── Configurar MLflow ─────────────────────────────────────────────────────────</span>
+<span class="n">MLFLOW_DIR</span>   <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;mlruns&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="n">TRACKING_URI</span> <span class="o">=</span> <span class="n">MLFLOW_DIR</span><span class="o">.</span><span class="n">as_uri</span><span class="p">()</span>
+<span class="n">EXPERIMENT</span>   <span class="o">=</span> <span class="s2">&quot;renovacion-prestamo-tuning&quot;</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">TRACKING_URI</span><span class="p">)</span>
+
+<span class="c1"># ── Buscar todos los runs del experimento ─────────────────────────────────────</span>
+<span class="n">exp</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_experiment_by_name</span><span class="p">(</span><span class="n">EXPERIMENT</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">exp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Experiment &#39;</span><span class="si">{</span><span class="n">EXPERIMENT</span><span class="si">}</span><span class="s2">&#39; no encontrado. &quot;</span>
+        <span class="s2">&quot;Ejecuta primero los scripts 02 y 03.&quot;</span>
+    <span class="p">)</span>
+
+<span class="n">runs</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">search_runs</span><span class="p">(</span>
+    <span class="n">experiment_ids</span><span class="o">=</span><span class="p">[</span><span class="n">exp</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">],</span>
+    <span class="n">order_by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;metrics.f1 DESC&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total de runs encontrados: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">runs</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Tabla comparativa ─────────────────────────────────────────────────────────</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;tags.mlflow.runName&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;params.metodo_busqueda&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;metrics.f1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;metrics.recall&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;metrics.precision&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;metrics.roc_auc&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;metrics.accuracy&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;metrics.cv_f1_mean&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;params.n_combinaciones&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">cols_disp</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">runs</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== COMPARACIÓN DE RUNS (ordenado por F1 DESC) ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">runs</span><span class="p">[</span><span class="n">cols_disp</span><span class="p">]</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="n">mejor</span> <span class="o">=</span> <span class="n">runs</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">★ MEJOR RUN: </span><span class="si">{</span><span class="n">mejor</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tags.mlflow.runName&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">mejor</span><span class="p">[</span><span class="s1">&#39;run_id&#39;</span><span class="p">][:</span><span class="mi">8</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  F1       : </span><span class="si">{</span><span class="n">mejor</span><span class="p">[</span><span class="s1">&#39;metrics.f1&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Recall   : </span><span class="si">{</span><span class="n">mejor</span><span class="p">[</span><span class="s1">&#39;metrics.recall&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Precision: </span><span class="si">{</span><span class="n">mejor</span><span class="p">[</span><span class="s1">&#39;metrics.precision&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ROC-AUC  : </span><span class="si">{</span><span class="n">mejor</span><span class="p">[</span><span class="s1">&#39;metrics.roc_auc&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Accuracy : </span><span class="si">{</span><span class="n">mejor</span><span class="p">[</span><span class="s1">&#39;metrics.accuracy&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Gráfico comparativo ───────────────────────────────────────────────────────</span>
+<span class="n">metricas_plot</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;metrics.f1&quot;</span><span class="p">,</span> <span class="s2">&quot;metrics.recall&quot;</span><span class="p">,</span> <span class="s2">&quot;metrics.roc_auc&quot;</span><span class="p">,</span> <span class="s2">&quot;metrics.accuracy&quot;</span><span class="p">]</span>
+<span class="n">titulos_plot</span>  <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;F1-Score&quot;</span><span class="p">,</span> <span class="s2">&quot;Recall&quot;</span><span class="p">,</span> <span class="s2">&quot;ROC-AUC&quot;</span><span class="p">,</span> <span class="s2">&quot;Accuracy&quot;</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tags.mlflow.runName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;run&#39;</span><span class="p">))</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;run_id&#39;</span><span class="p">][:</span><span class="mi">6</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">runs</span><span class="o">.</span><span class="n">iterrows</span><span class="p">()</span>
+<span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;#2E75B6&quot;</span><span class="p">,</span> <span class="s2">&quot;#C55A11&quot;</span><span class="p">,</span> <span class="s2">&quot;#1E6E38&quot;</span><span class="p">,</span> <span class="s2">&quot;#7030A0&quot;</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
+    <span class="s2">&quot;Comparación de Runs — Renovación de Préstamo Tuning&quot;</span><span class="p">,</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">met</span><span class="p">,</span> <span class="n">titulo</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">metricas_plot</span><span class="p">,</span> <span class="n">titulos_plot</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="n">runs</span><span class="p">[</span><span class="n">met</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">bars</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">vals</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">vals</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+            <span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.002</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">titulo</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.08</span><span class="p">)])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">Path</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">output_png</span> <span class="o">=</span> <span class="s2">&quot;src/comparacion_runs.png&quot;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output_png</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✓ Gráfico guardado: </span><span class="si">{</span><span class="n">output_png</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Siguiente paso: python pipeline/05_mejor_modelo.py&quot;</span><span class="p">)</span>
+</pre></div>
+<div class="box box-info">Cada vez que ejecutas el pipeline se agregan <strong>2 runs más</strong> al experimento y una nueva versión del modelo en el Registry. Es el comportamiento esperado de MLflow: nada se sobrescribe. Para empezar desde cero: <code>rm -rf mlruns src</code>.</div>
+</div></div>
+<div class="card"><div class="sec-header step"><div class="step-row"><div class="step-badge">PASO<span>6</span></div><div class="step-title">Selección programática del mejor modelo</div><span class="step-label">pipeline/05_mejor_modelo.py</span></div></div><div class="card-body">
+<p>Toma el primer run ordenado por F1, carga el modelo desde MLflow con <code>runs:/&lt;id&gt;/&lt;artifact&gt;</code> (sin buscar archivos en disco), imprime la matriz de confusión y el reporte final, y guarda <code>src/mejor_run.txt</code> para el Model Registry.</p>
+<div class="code-wrap" data-archivo="proyecto_final/pipeline/05_mejor_modelo.py"><div class="code-header"><span class="code-lang">python — pipeline/05_mejor_modelo.py</span><button class="copy-btn" type="button"></button></div><pre class="codigo"><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Sección 11 — Selección programática del mejor modelo.</span>
+
+<span class="sd">Carga el mejor run por F1 directamente desde MLflow.</span>
+
+<span class="sd">Ejecutar: python pipeline/05_mejor_modelo.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">import</span> <span class="nn">mlflow.sklearn</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MLFLOW_ALLOW_FILE_STORE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
+
+<span class="c1"># ── Cargar datos de test ──────────────────────────────────────────────────────</span>
+<span class="n">BASE_PKL</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;src/base_data.pkl&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">BASE_PKL</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+        <span class="s2">&quot;No se encontró src/base_data.pkl. &quot;</span>
+        <span class="s2">&quot;Ejecuta primero: python pipeline/01_base_pipeline.py&quot;</span>
+    <span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">BASE_PKL</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># ── Configurar MLflow ─────────────────────────────────────────────────────────</span>
+<span class="n">MLFLOW_DIR</span>   <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;mlruns&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="n">TRACKING_URI</span> <span class="o">=</span> <span class="n">MLFLOW_DIR</span><span class="o">.</span><span class="n">as_uri</span><span class="p">()</span>
+<span class="n">EXPERIMENT</span>   <span class="o">=</span> <span class="s2">&quot;renovacion-prestamo-tuning&quot;</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">TRACKING_URI</span><span class="p">)</span>
+
+<span class="c1"># ── Buscar y ordenar runs por F1 ──────────────────────────────────────────────</span>
+<span class="n">exp</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_experiment_by_name</span><span class="p">(</span><span class="n">EXPERIMENT</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">exp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Experiment &#39;</span><span class="si">{</span><span class="n">EXPERIMENT</span><span class="si">}</span><span class="s2">&#39; no encontrado. &quot;</span>
+        <span class="s2">&quot;Ejecuta primero los scripts 02 y 03.&quot;</span>
+    <span class="p">)</span>
+
+<span class="n">runs</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">search_runs</span><span class="p">(</span>
+    <span class="n">experiment_ids</span><span class="o">=</span><span class="p">[</span><span class="n">exp</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">],</span>
+    <span class="n">order_by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;metrics.f1 DESC&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="c1"># ── Identificar el mejor run ──────────────────────────────────────────────────</span>
+<span class="n">mejor_run</span>    <span class="o">=</span> <span class="n">runs</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">mejor_id</span>     <span class="o">=</span> <span class="n">mejor_run</span><span class="p">[</span><span class="s2">&quot;run_id&quot;</span><span class="p">]</span>
+<span class="n">mejor_nombre</span> <span class="o">=</span> <span class="n">mejor_run</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tags.mlflow.runName&quot;</span><span class="p">,</span> <span class="s2">&quot;desconocido&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SECCIÓN 11 — Selección del mejor modelo&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mejor run  : </span><span class="si">{</span><span class="n">mejor_nombre</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run ID     : </span><span class="si">{</span><span class="n">mejor_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F1         : </span><span class="si">{</span><span class="n">mejor_run</span><span class="p">[</span><span class="s1">&#39;metrics.f1&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recall     : </span><span class="si">{</span><span class="n">mejor_run</span><span class="p">[</span><span class="s1">&#39;metrics.recall&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision  : </span><span class="si">{</span><span class="n">mejor_run</span><span class="p">[</span><span class="s1">&#39;metrics.precision&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ROC-AUC    : </span><span class="si">{</span><span class="n">mejor_run</span><span class="p">[</span><span class="s1">&#39;metrics.roc_auc&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy   : </span><span class="si">{</span><span class="n">mejor_run</span><span class="p">[</span><span class="s1">&#39;metrics.accuracy&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CV F1 mean : </span><span class="si">{</span><span class="n">mejor_run</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;metrics.cv_f1_mean&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Cargar el modelo directamente desde MLflow ────────────────────────────────</span>
+<span class="n">artifact</span>  <span class="o">=</span> <span class="s2">&quot;modelo_gridsearch&quot;</span> <span class="k">if</span> <span class="s2">&quot;Grid&quot;</span> <span class="ow">in</span> <span class="n">mejor_nombre</span> <span class="k">else</span> <span class="s2">&quot;modelo_randomsearch&quot;</span>
+<span class="n">model_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;runs:/</span><span class="si">{</span><span class="n">mejor_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">artifact</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Cargando modelo desde: </span><span class="si">{</span><span class="n">model_uri</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">modelo_produccion</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_uri</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tipo de modelo: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">modelo_produccion</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parámetros    : </span><span class="si">{</span><span class="n">modelo_produccion</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Evaluación final completa ─────────────────────────────────────────────────</span>
+<span class="n">y_pred_final</span> <span class="o">=</span> <span class="n">modelo_produccion</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== EVALUACIÓN FINAL DEL MEJOR MODELO ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matriz de confusión:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_final</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_final</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># ── Guardar info para el Model Registry ──────────────────────────────────────</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;src/mejor_run.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mejor_id</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">mejor_nombre</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">artifact</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ Info guardada en src/mejor_run.txt&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Siguiente paso: python pipeline/06_model_registry.py&quot;</span><span class="p">)</span>
+</pre></div></div></div>
+<div class="card"><div class="sec-header step"><div class="step-row"><div class="step-badge">PASO<span>7</span></div><div class="step-title">MLflow Model Registry (Staging → Production)</div><span class="step-label">pipeline/06_model_registry.py</span></div></div><div class="card-body">
+<p>Registra el mejor modelo como <code>RenovacionPrestamo-Clasificador</code> y lo promueve a <strong>Staging</strong>. El flujo completo es: <code>Run → Registered Model → Staging → (Production)</code>. La promoción a Production queda comentada hasta validar en Staging.</p>
+<div class="code-wrap" data-archivo="proyecto_final/pipeline/06_model_registry.py"><div class="code-header"><span class="code-lang">python — pipeline/06_model_registry.py</span><button class="copy-btn" type="button"></button></div><pre class="codigo"><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Sección 12 — Registro del mejor modelo en MLflow Model Registry.</span>
+
+<span class="sd">Flujo: Run → Registered Model → Staging → (Production)</span>
+
+<span class="sd">Ejecutar: python pipeline/06_model_registry.py</span>
+<span class="sd">Prerrequisito: src/mejor_run.txt (generado por 05_mejor_modelo.py)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">import</span> <span class="nn">mlflow.sklearn</span>
+<span class="kn">from</span> <span class="nn">mlflow</span> <span class="kn">import</span> <span class="n">MlflowClient</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MLFLOW_ALLOW_FILE_STORE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
+
+<span class="c1"># ── Configurar MLflow ─────────────────────────────────────────────────────────</span>
+<span class="n">MLFLOW_DIR</span>     <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;mlruns&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="n">TRACKING_URI</span>   <span class="o">=</span> <span class="n">MLFLOW_DIR</span><span class="o">.</span><span class="n">as_uri</span><span class="p">()</span>
+<span class="n">MODEL_REGISTRY</span> <span class="o">=</span> <span class="s2">&quot;RenovacionPrestamo-Clasificador&quot;</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">TRACKING_URI</span><span class="p">)</span>
+
+<span class="c1"># ── Leer el mejor run ─────────────────────────────────────────────────────────</span>
+<span class="n">MEJOR_RUN_FILE</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;src/mejor_run.txt&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">MEJOR_RUN_FILE</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+        <span class="s2">&quot;No se encontró src/mejor_run.txt. &quot;</span>
+        <span class="s2">&quot;Ejecuta primero: python pipeline/05_mejor_modelo.py&quot;</span>
+    <span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">MEJOR_RUN_FILE</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">lines</span>     <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">mejor_id</span>  <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">mejor_nom</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">artifact</span>  <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SECCIÓN 12 — MLflow Model Registry&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run a registrar : </span><span class="si">{</span><span class="n">mejor_nom</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run ID          : </span><span class="si">{</span><span class="n">mejor_id</span><span class="p">[:</span><span class="mi">12</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Artifact path   : </span><span class="si">{</span><span class="n">artifact</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Registry name   : </span><span class="si">{</span><span class="n">MODEL_REGISTRY</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Registrar el mejor modelo ─────────────────────────────────────────────────</span>
+<span class="n">model_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;runs:/</span><span class="si">{</span><span class="n">mejor_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">artifact</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">result</span>    <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span><span class="n">model_uri</span><span class="p">,</span> <span class="n">MODEL_REGISTRY</span><span class="p">)</span>
+<span class="n">version</span>   <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">version</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✓ Modelo registrado: </span><span class="si">{</span><span class="n">MODEL_REGISTRY</span><span class="si">}</span><span class="s2"> v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Promover a Staging ────────────────────────────────────────────────────────</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">MlflowClient</span><span class="p">(</span><span class="n">tracking_uri</span><span class="o">=</span><span class="n">TRACKING_URI</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">transition_model_version_stage</span><span class="p">(</span>
+    <span class="n">name</span>    <span class="o">=</span> <span class="n">MODEL_REGISTRY</span><span class="p">,</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">version</span><span class="p">,</span>
+    <span class="n">stage</span>   <span class="o">=</span> <span class="s2">&quot;Staging&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># Alternativa a prueba de futuro (los stages están deprecados): alias</span>
+<span class="n">client</span><span class="o">.</span><span class="n">set_registered_model_alias</span><span class="p">(</span><span class="n">MODEL_REGISTRY</span><span class="p">,</span> <span class="s2">&quot;staging&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✓ Modelo en Staging: </span><span class="si">{</span><span class="n">MODEL_REGISTRY</span><span class="si">}</span><span class="s2"> v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2"> (alias @staging)&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Verificar estado ──────────────────────────────────────────────────────────</span>
+<span class="n">model_details</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_model_version</span><span class="p">(</span><span class="n">MODEL_REGISTRY</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Estado del modelo registrado:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Nombre   : </span><span class="si">{</span><span class="n">model_details</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Versión  : </span><span class="si">{</span><span class="n">model_details</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Stage    : </span><span class="si">{</span><span class="n">model_details</span><span class="o">.</span><span class="n">current_stage</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Run ID   : </span><span class="si">{</span><span class="n">model_details</span><span class="o">.</span><span class="n">run_id</span><span class="p">[:</span><span class="mi">12</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Verificar carga desde el Registry ────────────────────────────────────────</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Verificando carga desde Staging...&quot;</span><span class="p">)</span>
+<span class="n">modelo_staging</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;models:/</span><span class="si">{</span><span class="n">MODEL_REGISTRY</span><span class="si">}</span><span class="s2">/Staging&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✓ Modelo cargado desde Staging: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">modelo_staging</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ── Opcional: promover a Production ──────────────────────────────────────────</span>
+<span class="c1"># Descomentar cuando el modelo haya pasado validación en Staging:</span>
+<span class="c1">#</span>
+<span class="c1"># client.transition_model_version_stage(</span>
+<span class="c1">#     name=MODEL_REGISTRY, version=version, stage=&quot;Production&quot;</span>
+<span class="c1"># )</span>
+<span class="c1"># print(f&quot;✓ Modelo en Production: {MODEL_REGISTRY} v{version}&quot;)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PROYECTO FINAL (TEMA 6) COMPLETADO&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Modelo registrado : </span><span class="si">{</span><span class="n">MODEL_REGISTRY</span><span class="si">}</span><span class="s2"> v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2"> (Staging)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  MLflow UI         : MLFLOW_ALLOW_FILE_STORE=true mlflow ui --backend-store-uri ./mlruns --host 0.0.0.0 --port 5000&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Gráfico           : src/comparacion_runs.png&quot;</span><span class="p">)</span>
+</pre></div>
+<div class="box box-tech"><strong>Observación técnica — stages deprecados:</strong> en MLflow 3.x <code>transition_model_version_stage</code> emite un <code>FutureWarning</code> pero sigue funcionando. Por eso el script además asigna el alias <code>@staging</code> con <code>set_registered_model_alias</code>: es la forma recomendada a futuro (<code>models:/RenovacionPrestamo-Clasificador@staging</code>).</div>
+</div></div>
+<div class="card"><div class="sec-header step"><div class="step-row"><div class="step-badge">PASO<span>8</span></div><div class="step-title">Ejecutar todo el proyecto en secuencia</div><span class="step-label">pipeline/run_pipeline.py</span></div></div><div class="card-body">
+<p>El orquestador ejecuta los 6 scripts en orden, deja el log en <code>proyecto_run.log</code> y se detiene si alguno falla.</p>
+<div class="code-wrap" data-archivo="proyecto_final/pipeline/run_pipeline.py"><div class="code-header"><span class="code-lang">python — pipeline/run_pipeline.py</span><button class="copy-btn" type="button"></button></div><pre class="codigo"><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">run_pipeline.py — Orquestador: ejecuta las 6 secciones del proyecto final en secuencia.</span>
+
+<span class="sd">Uso desde la terminal del Codespace (en la raíz de proyecto_final/):</span>
+<span class="sd">    python pipeline/run_pipeline.py</span>
+
+<span class="sd">Equivale a ejecutar uno a uno:</span>
+<span class="sd">    python pipeline/01_base_pipeline.py</span>
+<span class="sd">    python pipeline/02_gridsearch_mlflow.py</span>
+<span class="sd">    python pipeline/03_randomsearch_mlflow.py</span>
+<span class="sd">    python pipeline/04_comparar_runs.py</span>
+<span class="sd">    python pipeline/05_mejor_modelo.py</span>
+<span class="sd">    python pipeline/06_model_registry.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+    <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> | PROYECTO | </span><span class="si">%(levelname)s</span><span class="s2"> | </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">,</span>
+    <span class="n">handlers</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">),</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="s2">&quot;proyecto_run.log&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;proyecto&quot;</span><span class="p">)</span>
+
+<span class="n">SCRIPTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;Secciones 1-7 : Base pipeline&quot;</span><span class="p">,</span>              <span class="s2">&quot;pipeline/01_base_pipeline.py&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Sección  8    : GridSearchCV + MLflow&quot;</span><span class="p">,</span>       <span class="s2">&quot;pipeline/02_gridsearch_mlflow.py&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Sección  9    : RandomizedSearchCV + MLflow&quot;</span><span class="p">,</span> <span class="s2">&quot;pipeline/03_randomsearch_mlflow.py&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Sección  10   : Comparar runs&quot;</span><span class="p">,</span>               <span class="s2">&quot;pipeline/04_comparar_runs.py&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Sección  11   : Mejor modelo&quot;</span><span class="p">,</span>                <span class="s2">&quot;pipeline/05_mejor_modelo.py&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Sección  12   : Model Registry&quot;</span><span class="p">,</span>              <span class="s2">&quot;pipeline/06_model_registry.py&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">ejecutar</span><span class="p">(</span><span class="n">nombre</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">script</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ejecuta un script y retorna True si tuvo éxito.&quot;&quot;&quot;</span>
+    <span class="n">inicio</span>    <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt; </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">nombre</span><span class="p">)</span>
+    <span class="n">resultado</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="n">script</span><span class="p">],</span>
+        <span class="n">capture_output</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>   <span class="c1"># muestra output en tiempo real</span>
+    <span class="p">)</span>
+    <span class="n">duracion</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">inicio</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">resultado</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;&lt;&lt;&lt; OK: </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%.2f</span><span class="s2"> s)&quot;</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">duracion</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;XXX FALLO: </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%.2f</span><span class="s2"> s)&quot;</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">duracion</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot; PROYECTO FINAL — Renovación de Préstamo (Tema 6)&quot;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+
+<span class="n">resumen</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">script</span> <span class="ow">in</span> <span class="n">SCRIPTS</span><span class="p">:</span>
+    <span class="n">ok</span> <span class="o">=</span> <span class="n">ejecutar</span><span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="n">script</span><span class="p">)</span>
+    <span class="n">resumen</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">nombre</span><span class="p">,</span> <span class="n">ok</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Pipeline detenido. Corrige el error y reintenta.&quot;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Puedes ejecutar el script individualmente para depurar:&quot;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;  python </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">script</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot; PROYECTO FINAL COMPLETADO&quot;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">ok</span> <span class="ow">in</span> <span class="n">resumen</span><span class="p">:</span>
+    <span class="n">estado</span> <span class="o">=</span> <span class="s2">&quot;OK&quot;</span> <span class="k">if</span> <span class="n">ok</span> <span class="k">else</span> <span class="s2">&quot;XX&quot;</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  [</span><span class="si">%s</span><span class="s2">] </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">estado</span><span class="p">,</span> <span class="n">nombre</span><span class="p">)</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Resultados:&quot;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;    Gráfico comparativo : src/comparacion_runs.png&quot;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;    Modelo registrado   : MLflow Model Registry (Staging)&quot;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;    Log de ejecución    : proyecto_run.log&quot;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Para ver MLflow UI en Codespace:&quot;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;    MLFLOW_ALLOW_FILE_STORE=true mlflow ui --backend-store-uri ./mlruns </span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;        --host 0.0.0.0 --port 5000 --allowed-hosts </span><span class="se">\&quot;</span><span class="s2">localhost:*,127.0.0.1:*,*.app.github.dev</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;    Luego: pestaña PORTS -&gt; clic en globo del puerto 5000&quot;</span><span class="p">)</span>
+</pre></div><div class="code-wrap" data-archivo=""><div class="code-header"><span class="code-lang">bash — Terminal del Codespace — flujo completo</span><button class="copy-btn" type="button"></button></div><pre class="codigo"><span class="nb">cd</span><span class="w"> </span>/workspaces/MLOPS/proyecto_final
+
+<span class="c1"># Opción A: todo en secuencia (recomendado)</span>
+python<span class="w"> </span>pipeline/run_pipeline.py
+<span class="c1"># ... [OK] Secciones 1-7 ... [OK] Sección 12 : Model Registry</span>
+<span class="c1"># PROYECTO FINAL COMPLETADO</span>
+
+<span class="c1"># Opción B: script por script (para depurar)</span>
+python<span class="w"> </span>pipeline/01_base_pipeline.py
+python<span class="w"> </span>pipeline/02_gridsearch_mlflow.py
+python<span class="w"> </span>pipeline/03_randomsearch_mlflow.py
+python<span class="w"> </span>pipeline/04_comparar_runs.py
+python<span class="w"> </span>pipeline/05_mejor_modelo.py
+python<span class="w"> </span>pipeline/06_model_registry.py
+</pre></div><div class="code-wrap" data-archivo=""><div class="code-header"><span class="code-lang">bash — Ver la MLflow UI (segunda terminal)</span><button class="copy-btn" type="button"></button></div><pre class="codigo"><span class="c1"># En una SEGUNDA terminal (Ctrl+` → botón +), desde /workspaces/MLOPS/proyecto_final:</span>
+<span class="nv">MLFLOW_ALLOW_FILE_STORE</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>mlflow<span class="w"> </span>ui<span class="w"> </span>--backend-store-uri<span class="w"> </span>./mlruns<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allowed-hosts<span class="w"> </span><span class="s2">&quot;localhost:*,127.0.0.1:*,*.app.github.dev&quot;</span>
+<span class="c1"># Usar 0.0.0.0 para que Codespaces reenvíe el puerto.</span>
+<span class="c1"># Luego: pestaña PORTS → clic en el globo del puerto 5000</span>
+</pre></div>
+<div class="box box-danger"><strong>Por qué el comando de la UI lleva opciones extra:</strong> con MLflow 3.x, <code>mlflow ui</code> a secas sobre <code>./mlruns</code> termina con <em>«The filesystem tracking backend … is in maintenance mode»</em>. Hay que habilitarlo con <code>MLFLOW_ALLOW_FILE_STORE=true</code> e indicar <code>--backend-store-uri ./mlruns</code>. <code>--allowed-hosts</code> permite abrir la UI desde la URL <code>*.app.github.dev</code> del Codespace.</div>
+<p><strong>Resultados de referencia</strong> (corrida de prueba con MLflow 3.17 / scikit-learn 1.9; pueden variar levemente con otras versiones):</p>
+<table class="t"><thead><tr><th>Run</th><th>F1</th><th>Recall</th><th>Precision</th><th>ROC-AUC</th><th>Accuracy</th><th>CV F1</th></tr></thead><tbody>
+<tr><td>Línea base — RandomForest + Under (sin tuning)</td><td>0.1063</td><td>0.5945</td><td>0.0584</td><td>0.6431</td><td>0.6011</td><td>—</td></tr>
+<tr><td><code>GridSearch-RandomForest</code></td><td>0.1079</td><td>0.6422</td><td>0.0589</td><td>0.6540</td><td>0.5762</td><td>0.6373</td></tr>
+<tr><td><strong><code>RandomSearch-RandomForest</code> ★</strong></td><td><strong>0.1126</strong></td><td>0.6336</td><td>0.0618</td><td>0.6619</td><td>0.6014</td><td>0.6305</td></tr>
+</tbody></table>
+<div class="box box-info"><strong>Lectura:</strong> RandomSearch gana en test con menos entrenamientos que Grid (150 vs. 240), aunque Grid tuvo mejor F1 en validación cruzada. El F1 de CV (~0.63) es mucho mayor que el de test (~0.11) porque la CV se calcula sobre datos balanceados 50/50 y el test conserva el 3.99 % real de positivos: lo que cae es la precision, no el recall. Duración aproximada del pipeline completo: 2–3 min.</div>
+<div class="box box-tech"><strong>Warning esperado en el paso 06:</strong> <em>«Run … has no artifacts at artifact path 'modelo_randomsearch', registering model based on models:/m-… instead»</em>. En MLflow 3.x los modelos se guardan como <em>logged models</em> y el registro los resuelve solo; el modelo queda registrado y se carga correctamente desde Staging.</div>
+
+<div class="box box-success"><strong>✓ Resultado esperado:</strong> dos runs (<code>GridSearch-RandomForest</code> y <code>RandomSearch-RandomForest</code>) en el experimento <code>renovacion-prestamo-tuning</code>, un gráfico en <code>src/comparacion_runs.png</code> y el modelo <code>RenovacionPrestamo-Clasificador</code> registrado en <strong>Staging</strong>. Cada nueva ejecución agrega 2 runs y una nueva versión del modelo.</div>
+</div></div>
+<div class="card"><div class="sec-header">6. Referencia rápida de comandos</div><div class="card-body">
+<table class="t"><thead><tr><th>Comando</th><th>Para qué sirve</th></tr></thead><tbody>
+<tr><td><code>python pipeline/run_pipeline.py</code></td><td>Ejecuta las 6 secciones en secuencia</td></tr>
+<tr><td><code>python pipeline/01_base_pipeline.py</code></td><td>Limpieza + balanceo + línea base; genera <code>src/base_data.pkl</code></td></tr>
+<tr><td><code>python pipeline/02_gridsearch_mlflow.py</code></td><td>GridSearchCV + registro del Run 1</td></tr>
+<tr><td><code>python pipeline/03_randomsearch_mlflow.py</code></td><td>RandomizedSearchCV + registro del Run 2</td></tr>
+<tr><td><code>python pipeline/04_comparar_runs.py</code></td><td>Tabla comparativa + gráfico de barras</td></tr>
+<tr><td><code>python pipeline/05_mejor_modelo.py</code></td><td>Selecciona y carga el mejor run por F1</td></tr>
+<tr><td><code>python pipeline/06_model_registry.py</code></td><td>Registra el ganador y lo promueve a Staging</td></tr>
+<tr><td><code>MLFLOW_ALLOW_FILE_STORE=true mlflow ui --backend-store-uri ./mlruns --host 0.0.0.0 --port 5000</code></td><td>Lanza la UI de MLflow (agrega <code>--allowed-hosts</code> en Codespaces)</td></tr>
+<tr><td><code>rm -rf mlruns src</code></td><td>Borra runs, modelos registrados y salidas para empezar desde cero</td></tr>
+</tbody></table></div></div>
+<div class="card"><div class="sec-header">7. ¿Qué aprendiste en este proyecto?</div><div class="card-body">
+<div class="learning"><div class="learning-title">Del notebook al pipeline</div><div class="learning-desc">Las celdas de exploración se convirtieron en un script determinista: misma semilla, mismas transformaciones y un único split reutilizado por todos los experimentos.</div></div>
+<div class="learning"><div class="learning-title">Desbalance de clases</div><div class="learning-desc">Con 3.99 % de positivos, la accuracy no sirve para elegir. Se balancea solo el train y se evalúa con F1, Recall, Precision y ROC-AUC sobre un test con la distribución real.</div></div>
+<div class="learning"><div class="learning-title">Grid vs. Random sobre un RandomForest</div><div class="learning-desc">Grid recorre todas las combinaciones de una grilla chica; Random explora un espacio más amplio (7 hiperparámetros) con menos entrenamientos.</div></div>
+<div class="learning"><div class="learning-title">MLflow tracking + Registry</div><div class="learning-desc">Cada búsqueda es un run con parámetros, métricas y modelo. <code>search_runs()</code> elige el mejor y <code>register_model()</code> lo publica en Staging.</div></div>
+<div class="learning"><div class="learning-title">Lectura de negocio</div><div class="learning-desc">El modelo detecta la mayoría de los clientes que renuevan (recall alto) pero con precision baja: de cada 100 clientes contactados pocos renuevan. Sirve para priorizar la campaña, no para decidir cliente por cliente.</div></div>
+</div></div>
+<div class="card"><div class="sec-header">8. Checklist final</div><div class="card-body">
+<ul class="checklist">
+<li>Instalé las dependencias con <code>pip install -r requirements.txt</code>.</li>
+<li>Ejecuté <code>python pipeline/01_base_pipeline.py</code> y se creó <code>src/base_data.pkl</code>.</li>
+<li>Corrí GridSearch y RandomSearch; veo dos runs en el experimento <code>renovacion-prestamo-tuning</code>.</li>
+<li>Comparé los runs y se generó <code>src/comparacion_runs.png</code>.</li>
+<li>Seleccioné el mejor modelo por F1 y lo registré en el Model Registry (Staging).</li>
+<li>Abrí la MLflow UI en el puerto 5000 reenviado por la pestaña PORTS.</li>
+</ul></div></div>
+  <div class="nav-unidades">
+    <a href="../unidad_06/"><span class="rot">← Referencia</span>Tema 6 — Ajuste y Seguimiento de Modelos (Picos Intensidad)</a>
+  </div>
+  <div class="doc-footer">
+    <span>Renovación de Préstamo · Ajuste y Seguimiento de Modelos</span>
+    <span>MLOps con GitHub Codespaces y Google Cloud Platform</span>
+  </div>
+</div>
+<script>
+(function () {
+  "use strict";
+  var ICON_COPY = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/></svg>';
+  var ICON_OK = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>';
+  function initBtn(btn) { btn.innerHTML = ICON_COPY + "Copiar"; }
+  document.querySelectorAll(".copy-btn").forEach(initBtn);
+  function confirmar(btn) {
+    btn.classList.add("copied");
+    btn.innerHTML = ICON_OK + "Copiado!";
+    setTimeout(function () { btn.classList.remove("copied"); initBtn(btn); }, 2000);
+  }
+  function copiar(texto) {
+    if (navigator.clipboard && window.isSecureContext)
+      return navigator.clipboard.writeText(texto);
+    return new Promise(function (res, rej) {
+      var ta = document.createElement("textarea");
+      ta.value = texto; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      try { document.execCommand("copy") ? res() : rej(); }
+      catch (e) { rej(e); }
+      finally { document.body.removeChild(ta); }
+    });
+  }
+  document.addEventListener("click", function (ev) {
+    var btn = ev.target.closest(".copy-btn");
+    if (!btn) return;
+    var pre = btn.closest(".code-wrap").querySelector("pre");
+    if (!pre) return;
+    copiar(pre.textContent.replace(/\n$/, "")).then(
+      function () { confirmar(btn); },
+      function () {
+        btn.textContent = "Error";
+        setTimeout(function () { initBtn(btn); }, 2000);
+      });
+  });
+})();
+</script>
+</body>
+</html>

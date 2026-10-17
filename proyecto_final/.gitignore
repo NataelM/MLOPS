@@ -1,0 +1,4 @@
+# Salidas regenerables del pipeline (python pipeline/run_pipeline.py)
+mlruns/
+src/
+proyecto_run.log
